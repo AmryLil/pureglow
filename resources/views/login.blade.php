@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>login</title>
+    <title>Login</title>
     @vite('resources/css/app.css')
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 </head>
 
-<body class="">
-
+<body class="bg-slate-100">
 
     <div class="flex items-center justify-center h-screen w-full bg-slate-100">
         <svg width="100%" height="100%" id="svg" viewBox="0 0 1440 667" xmlns="http://www.w3.org/2000/svg"
@@ -26,24 +24,40 @@
         <!-- Login Container -->
         <div class="absolute top-20 min-w-fit flex-col border bg-white px-6 py-14 shadow-md rounded-[4px] ">
             <div class="mb-4 flex justify-center">
-                <img class="w-32" src="{{ asset('images/logo.png') }}" alt="" />
+                <img class="w-32" src="{{ asset('images/logo.png') }}" alt="Logo" />
             </div>
             <div class="text-center text-xl font-bold text-slate-900 mb-5">
                 Enter your Account
             </div>
-            <div class="flex flex-col text-sm rounded-md">
-                <input
-                    class="mb-5 rounded-[4px] border p-3 hover:outline-none focus:outline-none hover:border-indigo-800 "
-                    type="text" placeholder="Username or Email" />
-                <input class="border rounded-[4px] p-3 hover:outline-none focus:outline-none hover:border-indigo-800"
-                    type="password" placeholder="Password" />
-            </div>
-            <button
-                class="mt-5 w-full border p-2 bg-indigo-700 text-white rounded-[4px] hover:bg-indigo-800 duration-300 font-bold"
-                type="submit">Sign in</button>
+
+            <!-- Error Messages -->
+            @if ($errors->any())
+                <div class="mb-4 text-red-500">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('login') }}" method="POST">
+                @csrf
+                <div class="flex flex-col text-sm rounded-md">
+                    <input
+                        class="mb-5 rounded-[4px] border p-3 hover:outline-none focus:outline-none hover:border-indigo-800"
+                        type="text" name="email_222290" placeholder="Username or Email" required />
+                    <input
+                        class="border rounded-[4px] p-3 hover:outline-none focus:outline-none hover:border-indigo-800"
+                        type="password" name="password_222290" placeholder="Password" required />
+                </div>
+                <button
+                    class="mt-5 w-full border p-2 bg-indigo-700 text-white rounded-[4px] hover:bg-indigo-800 duration-300 font-bold"
+                    type="submit">Sign in</button>
+            </form>
             <div class="mt-1 flex justify-between text-sm text-gray-600">
                 <a href="#">Forgot password?</a>
-                <a href="#">Sign up</a>
+                <a href="{{ route('signup') }}">Sign up</a>
             </div>
 
             <div class="flex justify-center mt-2 text-sm py-2 border rounded-sm gap-2">

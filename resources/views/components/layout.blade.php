@@ -17,6 +17,7 @@
         rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+
     <!-- Styles -->
     <style>
         .border_custom {
@@ -28,7 +29,7 @@
 
 </head>
 
-<body class="bg-gray-100 font-jost">
+<body id="body" class="bg-gray-100 font-jost">
     <!-- Navbar -->
     @if (!Request::is('cart'))
         <!-- Cek jika URL bukan 'cart' -->
@@ -36,7 +37,10 @@
     @endif
 
     <!-- Hero Section -->
-    <main>
+    <main class="relative">
+        <div id="dark-body"
+            class="transition-all duration-150 ease-in-out w-screen h-screen hidden start-0 bg-slate-800 opacity-45 z-40">
+        </div>
         {{ $slot }}
     </main>
 
@@ -46,5 +50,6 @@
     @endif
 
 </body>
+<script src="{{ asset('js/handleModalProduct.js') }}"></script>
 
 </html>

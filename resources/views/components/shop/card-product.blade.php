@@ -1,5 +1,5 @@
 @props(['path', 'title', 'price', 'image', 'class'])
-<a href="{{ $title }}"
+<a href="{{ $path }}"
     class="relative max-w-xs rounded-lg overflow-hidden shadow-lg bg-white
     hover:scale-105 transition-all duration-150 cursor-pointer">
     <!-- Image Section -->

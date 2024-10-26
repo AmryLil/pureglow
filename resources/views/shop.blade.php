@@ -1,5 +1,5 @@
 <x-layout>
-    <main class="mt-[80px]">
+    <main class="mt-[80px] relative">
         <!-- Banner Section -->
         <div class="bg-cover bg-center h-[450px] px-32 flex justify-center items-center"
             style="background-image:url('{{ asset('images/bannershop.jpg') }}')">
@@ -15,7 +15,6 @@
                 <x-shop.card_category title="CATEGORY 1" desc="Explore our exclusive  "></x-shop.card_category>
                 <x-shop.card_category title="CATEGORY 2" desc="Quality skincare for "></x-shop.card_category>
                 <x-shop.card_category title="CATEGORY 3" desc="Innovative products "></x-shop.card_category>
-
             </div>
 
             <!-- Featured Items Section -->
@@ -44,19 +43,24 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 mt-5">
-                @if (!empty($images) && count($images) > 0)
-                    {{-- buatkan variabel untuk count --}}
-                    <?php $count = 0; ?>
-                    @foreach ($images as $image)
-                        <x-shop.card_product title="Product {{ $count }}" price="{{ $image['price'] ?? 'N/A' }}"
-                            image="{{ $image['webformatURL'] ?? asset('images/default.jpg') }}" class="w-6">
-                        </x-shop.card_product>
-                        <?php $count++; ?>
+                @if (!empty($products) && count($products) > 0)
+                    @foreach ($products as $product)
+                        <x-shop.card-product :path="route('product.show', $product->id_222290)" :title="$product->nama_222290" :price="number_format($product->harga_222290, 0, ',', '.') . ' IDR'" :image="$product->path_img_222290 ?? asset('images/default.jpg')"
+                            class="w-6" />
                     @endforeach
                 @else
                     <p class="text-center col-span-full">No products available.</p>
                 @endif
             </div>
+
+            <div class="flex justify-center items-center ">
+                <x-product></x-product>
+            </div>
+            {{-- <div class="w-full mt-10 flex justify-center items-center">
+                <a href="/shop?page=2" type="button"
+                    class=" px-20 cursor-pointer text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">Read
+                    More</a>
+            </div> --}}
         </div>
     </main>
 </x-layout>
