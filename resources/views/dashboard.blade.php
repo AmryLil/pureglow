@@ -24,7 +24,7 @@
             <div class="flex items-center gap-3">
                 <img src="{{ asset('images/icons/guru.png') }}" alt="teacher" class="w-16 ">
                 <div class="text-slate-50 text-lg">
-                    <div class="font-semibold">Total Kategori</div>
+                    <div class="font-semibold">Total Kategorissss</div>
                     <div class="font-bold">60</div>
                 </div>
             </div>
