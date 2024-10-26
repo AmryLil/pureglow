@@ -17,11 +17,33 @@ Route::get('/login', function () {
 Route::get('/dashboard', function () {
     return view('dashboard', ['title'=>'Dashboard']);
 });
+
+// Route untuk menampilkan daftar produk
+Route::get('/products', [ProductController::class, 'index'])->name('products');
+
+// Route untuk menampilkan form tambah produk
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+
+// Route untuk menyimpan produk baru
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+
+// Route untuk menampilkan form edit produk
+Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+
+// Route untuk memperbarui produk
+Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+
+// Route untuk menghapus produk
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+
 // Route::get('/signup', function () {
 //     return view('signup');
 // });
 Route::get('/cart', function () {
     return view('cart');
+});
+Route::get('/dashboard/product', function () {
+    return view('dashboard.product',['title'=>'Dashboard']);
 });
 Route::get('/categories', [CategoryProductController::class, 'index'])->name('categories');
 
