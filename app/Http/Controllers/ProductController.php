@@ -20,7 +20,7 @@ class ProductController extends Controller
 }
 public function create()
 {
-    return view('products.create');
+    return view('dashboard.products.create');
 }
 
 // Menyimpan data produk baru ke database
@@ -36,19 +36,19 @@ public function store(Request $request)
 
     Product::create($request->all());
 
-    return redirect()->route('products')->with('success', 'Produk berhasil ditambahkan.');
+    return redirect()->route('dashboard.products')->with('success', 'Produk berhasil ditambahkan.');
 }
 
 // Menampilkan detail produk tertentu
 public function show(Product $product)
 {
-    return view('products.show', compact('product'));
+    return view('dashboard.products.show', compact('product'));
 }
 
 // Menampilkan form untuk mengedit produk tertentu
 public function edit(Product $product)
 {
-    return view('products.edit', compact('product'));
+    return view('dashboard.products.edit', compact('product'));
 }
 
 // Memperbarui data produk di database
@@ -64,7 +64,7 @@ public function update(Request $request, Product $product)
 
     $product->update($request->all());
 
-    return redirect()->route('products')->with('success', 'Produk berhasil diperbarui.');
+    return redirect()->route('dashboard.products')->with('success', 'Produk berhasil diperbarui.');
 }
 
 // Menghapus produk tertentu dari database
@@ -72,6 +72,6 @@ public function destroy(Product $product)
 {
     $product->delete();
 
-    return redirect()->route('products')->with('success', 'Produk berhasil dihapus.');
+    return redirect()->route('dashboard.products')->with('success', 'Produk berhasil dihapus.');
 }
 }
