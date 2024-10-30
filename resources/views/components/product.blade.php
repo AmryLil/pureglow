@@ -12,7 +12,7 @@
             <div class="w-1/2  flex flex-col p-2 h-full justify-between">
                 <div class="text-start mt-2">
                     <h1 class="text-4xl font-bold">Example Product</h1>
-                    <p class="text-base text-gray-600 font-light">Category product</p>
+                    <p class="text-base text-gray-900 font-light">Category product</p>
                 </div>
                 <div class="h-0.5 w-full bg-slate-900 mt-4"></div>
 
@@ -20,7 +20,7 @@
 
                 <!-- Product Specs -->
                 <div class="mt-6 text-base">
-                    <p class="text-base text-gray-600 font-light">Description</p>
+                    <p class="text-base text-gray-900 font-light">Description</p>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae officia eveniet
                         necessitatibus non repellendus accusamus.

@@ -24,7 +24,7 @@
         <!-- Login Container -->
         <div class="absolute top-20 min-w-fit flex-col border bg-white px-6 py-14 shadow-md rounded-[4px] ">
             <div class="mb-4 flex justify-center">
-                <img class="w-32" src="{{ asset('images/logo.png') }}" alt="Logo" />
+                <img class="w-32" src="{{ asset('images/logo1.png') }}" alt="Logo" />
             </div>
             <div class="text-center text-xl font-bold text-slate-900 mb-5">
                 Enter your Account
@@ -55,7 +55,7 @@
                     class="mt-5 w-full border p-2 bg-indigo-700 text-white rounded-[4px] hover:bg-indigo-800 duration-300 font-bold"
                     type="submit">Sign in</button>
             </form>
-            <div class="mt-1 flex justify-between text-sm text-gray-600">
+            <div class="mt-1 flex justify-between text-sm text-gray-900">
                 <a href="#">Forgot password?</a>
                 <a href="{{ route('signup') }}">Sign up</a>
             </div>

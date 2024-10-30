@@ -10,11 +10,11 @@ class Product extends Model
     use HasFactory;
 
     // Jika nama tabel tidak sesuai dengan konvensi Laravel, Anda bisa mendefinisikannya seperti ini:
-    protected $table = 'produk_222290'; // Ganti 'skincare' dengan nama tabel Anda jika berbeda
+    protected $table = 'produk_222290';  // Ganti 'skincare' dengan nama tabel Anda jika berbeda
 
     // Set primary key ke id_222290
+    public $timestamps    = false;
     protected $primaryKey = 'id_222290';
-
 
     // Jika ada kolom yang tidak boleh diisi mass-assignable
     protected $fillable = [
@@ -26,4 +26,9 @@ class Product extends Model
         'path_img_222290',
         // tambahkan kolom lain sesuai kebutuhan
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(CategoryProduct::class, 'kategori_id_222290', 'id_222290');
+    }
 }

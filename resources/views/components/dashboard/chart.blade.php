@@ -1,8 +1,8 @@
 <div class="w-[60%] p-6 bg-white rounded-lg shadow-lg h-full ">
     <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-semibold text-gray-700">Student Statistics</h2>
+        <h2 class="text-xl font-semibold text-gray-700">Kategori Produk</h2>
         <div class="relative">
-            <button class="bg-purple-100 text-purple-500 px-3 py-1 text-sm rounded-full">Yearly</button>
+            <button class="bg-purple-100 text-purple-500 px-3 py-1 text-sm rounded-full">Total</button>
         </div>
     </div>
     <canvas id="myChart" width="400" height="200"></canvas>
@@ -13,10 +13,10 @@
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['2017', '2018', '2019', '2020', '2021'],
+            labels: ['Toner', 'Sunscreen', 'Mask', 'Cleanser', 'Other'],
             datasets: [{
                 label: 'Statistics',
-                data: [200, 400, 300, 700, 600],
+                data: [10, 30, 40, 30, 50],
                 backgroundColor: [
                     'rgba(156, 163, 175, 0.5)', // Gray
                     'rgba(156, 163, 175, 0.5)', // Gray

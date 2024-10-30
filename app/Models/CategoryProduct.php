@@ -9,9 +9,9 @@ class CategoryProduct extends Model
 {
     use HasFactory;
 
-    protected $table = 'kategori_produk_222290'; // Nama tabel kategori
-
+    protected $table      = 'kategori_produk_222290';  // Nama tabel kategori
     protected $primaryKey = 'id_222290';
+    public $timestamps    = false;
 
     protected $fillable = [
         'id_222290',

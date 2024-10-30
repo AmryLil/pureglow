@@ -23,7 +23,7 @@
         </svg>
         <div class="absolute top-10 w-[60vh] flex-col border bg-white px-6 py-14 shadow-md rounded-[4px] ">
             <div class="mb-4 flex justify-center">
-                <img class="w-32" src="{{ asset('images/logo.png') }}" alt="Logo" />
+                <img class="w-32" src="{{ asset('images/logo1.png') }}" alt="Logo" />
             </div>
 
             <div class="text-center text-xl font-bold text-slate-900 mb-5">
@@ -68,7 +68,7 @@
                 <div class="font-semibold text-blue-600">Sign up with Google</div>
             </div>
 
-            <div class="mt-2 flex justify-center text-sm text-gray-600 gap-1">
+            <div class="mt-2 flex justify-center text-sm text-gray-900 gap-1">
                 <a href="{{ route('login.form') }}">Do you have an account?</a>
                 <a href="{{ route('login.form') }}" class="font-semibold text-blue-600">Sign in</a>
             </div>

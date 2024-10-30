@@ -24,9 +24,9 @@ class signupController extends Controller
     {
         // Validasi input
         $request->validate([
-            'email_222290' => 'required|email|unique:users_222290',
-            'nama_222290' => 'required|string|max:255',
-            'password_222290' => 'required|string|min:8',
+            'email_222290'          => 'required|email|unique:users_222290',
+            'name_222290'           => 'required|string|max:255',
+            'password_222290'       => 'required|string|min:8',
             'password_confirmation' => 'required|string|min:8',
         ]);
 
@@ -40,8 +40,8 @@ class signupController extends Controller
 
         // Membuat user baru
         User::create([
-            'email_222290' => $request->input('email_222290'),
-            'nama_222290' => $request->input('name_222290'),
+            'email_222290'    => $request->input('email_222290'),
+            'name_222290'     => $request->input('name_222290'),
             'password_222290' => Hash::make($request->input('password_222290')),
         ]);
 

@@ -17,7 +17,7 @@
 <body>
     <x-dashboard.sidebar></x-dashboard.sidebar>
     <x-dashboard.header>{{ $title }}</x-dashboard.header>
-    <div class="py-2 px-3 pt-0 sm:ml-64">
+    <div class="py-2 px-3 pt-0 sm:ml-64 bg-gray-100">
 
         <div class="p-3 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
             {{ $slot }}

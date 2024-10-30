@@ -4,15 +4,16 @@
             <div class="flex">
                 <!-- Product Image -->
                 <div class="w-1/2 flex justify-center relative h-[80vh]">
-                    <img src="{{ $product->path_img_222290 }}" alt="{{ $product->nama_222290 }}"
-                        class="w-full h-full object-cover rounded-md">
+                    <img src="{{ Str::startsWith($product->path_img_222290, 'http') ? $product->path_img_222290 : asset('storage/images/' . $product->path_img_222290) }}"
+                        alt="Product Image">
+
                 </div>
 
                 <!-- Product Details -->
                 <div class="w-1/2 flex flex-col p-2 justify-between px-6">
                     <div class="text-start mt-2">
                         <h1 class="text-4xl font-bold">{{ $product->nama_222290 }}</h1>
-                        <p class="text-xl text-gray-600 font-light mt-2">Product Categoriesz</p>
+                        <p class="text-xl text-gray-900 font-light mt-2">Product Categoriesz</p>
                         <div class="h-0.5 w-full bg-slate-900 mt-3"></div>
 
                         <!-- Pastikan ada atribut category -->
@@ -21,7 +22,7 @@
                     <!-- Product Specs -->
                     <div>
                         <div class="mt-6 text-base">
-                            <p class="text-xl text-gray-600 font-light">Description</p>
+                            <p class="text-xl text-gray-900 font-light">Description</p>
                             <p class="text-lg">
                                 {{ $product->deskripsi_222290 }}
                             </p>

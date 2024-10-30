@@ -24,8 +24,8 @@
     </x-dashboard.header>
 
     <!-- Main Content -->
-    <div class="py-2 px-3 pt-0 sm:ml-64">
-        <div class="p-3 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+    <div class="py-2 px-3 pt-0 sm:ml-64 bg-gray-100">
+        <div class="p-3">
             @yield('content')
         </div>
     </div>
