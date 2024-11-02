@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductDetailsController;
 use App\Http\Controllers\SignupController;
@@ -13,6 +15,8 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::post('/create-transaction', [PaymentController::class, 'createTransaction']);
+
 // Route untuk login
 Route::get('/login', [LoginController::class,  'showLoginForm'])->name('login.form');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
@@ -23,7 +27,31 @@ Route::post('/signup', [SignupController::class, 'signup'])->name('signup');
 
 Route::post('/dashboard/produk/add', [ProductController::class, 'store'])->name('products.store');
 
-Route::resource('products', CategoryProductController::class);
+Route::middleware(['auth'])->group(function () {
+    // Rute untuk menampilkan semua produk
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+
+    // Rute untuk menampilkan dashboard produk
+    Route::get('/dashboard/produk', [ProductController::class, 'showProduct'])->name('dashboard.produk');
+
+    // Rute untuk menampilkan form untuk menambahkan produk
+    Route::get('/dashboard/produk/create', [ProductController::class, 'create'])->name('products.create');
+
+    // Rute untuk menyimpan produk baru
+    Route::post('/dashboard/produk', [ProductController::class, 'store'])->name('products.store');
+
+    // Rute untuk menampilkan detail produk
+    Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+
+    // Rute untuk menampilkan form edit produk
+    Route::get('/dashboard/produk/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
+
+    // Rute untuk memperbarui produk
+    Route::put('/dashboard/produk/{id}', [ProductController::class, 'update'])->name('products.update');
+
+    // Rute untuk menghapus produk
+    Route::delete('/dashboard/produk/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+});
 
 Route::get('/kategori', [CategoryProductController::class,      'index'])->name('categories');
 Route::get('/kategori/{id}', [CategoryProductController::class, 'show'])->name('categories.show');
@@ -36,13 +64,10 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/categories', [CategoryProductController::class, 'index'])->name('dashboard.category_products.index');
 
     // Route untuk menampilkan form tambah kategori produk
-    Route::get('/categories/create', [CategoryProductController::class, 'create'])->name('dashboard.category_products.create');
+    Route::get('/categories/tambah', [CategoryProductController::class, 'create'])->name('dashboard.category_products.create');
 
     // Route untuk menyimpan kategori produk baru
     Route::post('/categories', [CategoryProductController::class, 'store'])->name('dashboard.category_products.store');
-
-    // Route untuk menampilkan kategori produk tertentu berdasarkan ID
-    // Route::get('/categories/{id}', [CategoryProductController::class, 'show'])->name('dashboard.category_products.show');
 
     // Route untuk menampilkan form edit kategori produk berdasarkan ID
     Route::get('/categories/{id}/edit', [CategoryProductController::class, 'edit'])->name('dashboard.category_products.edit');
@@ -81,3 +106,7 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/login');
 })->name('logout');
+
+// cart
+Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart/view', [CartController::class,             'showCart'])->name('cart.view');

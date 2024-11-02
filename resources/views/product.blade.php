@@ -61,10 +61,28 @@
                             <button class="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-900 w-[80%]">
                                 Checkout Now
                             </button>
-                            <button class="w-[20%] bg-black justify-center flex rounded-md">
-                                <img src="{{ asset('images/carts.png') }}" alt="" class="h-12 ">
-                            </button>
+                            {{-- action="{{ route('cart.add', $product->id) }}" method="POST" --}}
+                            <form action="{{ route('cart.add', $product->id_222290) }}" method="POST" class="w-[20%]">
+                                @csrf
+                                <input type="hidden" name="quantity" id="inputQty" value="1">
+                                <button class="w-full bg-black justify-center flex rounded-md btn"
+                                    onclick="my_modal_2.showModal()">
+                                    <img src="{{ asset('images/carts.png') }}" alt="" class="h-12 ">
+                                </button>
+                                <!-- Open the modal using ID.showModal() method -->
+
+                                <dialog id="my_modal_2" class="modal">
+                                    <div class="modal-box">
+                                        <h3 class="text-lg font-bold">Hello!</h3>
+                                        <p class="py-4">Press ESC key or click outside to close</p>
+                                    </div>
+                                    <form method="dialog" class="modal-backdrop">
+                                        <button>close</button>
+                                    </form>
+                                </dialog>
                         </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -78,4 +96,20 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('increment').addEventListener('click', function() {
+            let qty = parseInt(document.getElementById('qty').innerText);
+            document.getElementById('qty').innerText = ++qty;
+            document.getElementById('inputQty').value = qty;
+        });
+
+        document.getElementById('decrement').addEventListener('click', function() {
+            let qty = parseInt(document.getElementById('qty').innerText);
+            if (qty > 1) {
+                document.getElementById('qty').innerText = --qty;
+                document.getElementById('inputQty').value = qty;
+            }
+        });
+    </script>
 </x-layout>

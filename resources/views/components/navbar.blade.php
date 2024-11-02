@@ -53,7 +53,7 @@
                         <span class="text-lg font-bold">8 Items</span>
                         <span class="">Subtotal: Rp 300.000</span>
                         <div class="card-actions">
-                            <a href="/cart">
+                            <a href="{{ route('cart.view') }}">
                                 <button class="btn btn-primary btn-block">Lihat Cart</button>
                             </a>
                         </div>

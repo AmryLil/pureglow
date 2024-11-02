@@ -31,4 +31,9 @@ class Product extends Model
     {
         return $this->belongsTo(CategoryProduct::class, 'kategori_id_222290', 'id_222290');
     }
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class, 'product_id_222290', 'id_222290');
+    }
 }
