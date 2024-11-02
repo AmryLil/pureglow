@@ -37,7 +37,8 @@ class CartController extends Controller
                 'price_222290'      => $product->harga_222290
             ]);
         }
-        return;
+
+        return response()->json(['message' => 'Product added to cart successfully'], 200);
     }
 
     public function showCart()
