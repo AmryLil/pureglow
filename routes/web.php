@@ -7,6 +7,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductDetailsController;
 use App\Http\Controllers\SignupController;
+use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -14,8 +15,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
-
-Route::post('/create-transaction', [PaymentController::class, 'createTransaction']);
 
 // Route untuk login
 Route::get('/login', [LoginController::class,  'showLoginForm'])->name('login.form');
@@ -106,7 +105,13 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/login');
 })->name('logout');
+Route::post('/create-transaction', [PaymentController::class, 'createTransaction']);
 
+Route::post('/store-pending-transaction', [PaymentController::class, 'storePendingTransaction']);
 // cart
 Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart/view', [CartController::class,             'showCart'])->name('cart.view');
+Route::delete('/cart/{productId}', [CartController::class,   'removeFromCart'])->name('cart.remove');
+
+Route::get('/transaksi', [TransaksiController::class,           'index'])->name('transaksi.index')->middleware('auth');
+Route::get('/dashboard/transaksi', [TransaksiController::class, 'showAll'])->name('transaksi.showAll');

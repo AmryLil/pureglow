@@ -5,7 +5,7 @@
 @section('title', 'Product List')
 
 @section('content')
-    <div class="relative h-full px-32 mt-14">
+    <div class="relative h-full px-32 mt-14 min-h-screen">
         <div class="flex justify-center items-center">
             <div class="h-0.5 bg-black w-full mt-10"></div>
             <h2 class="text-2xl font-semibold mt-10 text-center w-[800px]">LIST PRODUCTS</h2>
@@ -13,7 +13,7 @@
         </div>
 
         <!-- Products Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 mt-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 mt-5  min-h-screen">
             @if (!empty($products) && count($products) > 0)
                 @foreach ($products as $product)
                     <x-shop.card-product :path="route('product.show', $product->id_222290)" :title="$product->nama_222290" :price="number_format($product->harga_222290, 0, ',', '.') . ' IDR'" :image="Str::startsWith($product->path_img_222290, 'http')

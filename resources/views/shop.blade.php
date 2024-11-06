@@ -14,13 +14,6 @@
         </div>
 
         <div class="px-32 pt-10">
-            <!-- Categories Section -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <x-shop.card_category title="CATEGORY 1" desc="Explore our exclusive  "></x-shop.card_category>
-                <x-shop.card_category title="CATEGORY 2" desc="Quality skincare for "></x-shop.card_category>
-                <x-shop.card_category title="CATEGORY 3" desc="Innovative products "></x-shop.card_category>
-            </div>
-
             <!-- Featured Items Section -->
             <div class="flex justify-center items-center">
                 <div class="h-0.5 bg-black w-full mt-10"></div>
@@ -62,11 +55,11 @@
             <div class="flex justify-center items-center ">
                 <x-product></x-product>
             </div>
-            {{-- <div class="w-full mt-10 flex justify-center items-center">
+            <div class="w-full mt-10 flex justify-center items-center">
                 <a href="/shop?page=2" type="button"
                     class=" px-20 cursor-pointer text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">Read
                     More</a>
-            </div> --}}
+            </div>
         </div>
     </main>
 @endsection

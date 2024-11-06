@@ -9,6 +9,9 @@ use App\Models\CartItem_222290;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Midtrans\Config;
+use Midtrans\Snap;
 
 class CartController extends Controller
 {
@@ -79,5 +82,17 @@ class CartController extends Controller
                 ];
             })
         ], 200);
+    }
+
+    public function removeFromCart(Request $request, $productId)
+    {
+        // Ambil ID user dari sesi
+        $cartItem = CartItem::where('product_id_222290', $productId)->first();
+        if ($cartItem) {
+            $cartItem->delete();
+            return response()->json(['message' => 'Product removed from cart successfully']);
+        } else {
+            return response()->json(['message' => 'Product not found in cart'], 404);
+        }
     }
 }

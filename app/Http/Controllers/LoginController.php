@@ -38,6 +38,8 @@ class LoginController extends Controller
             session([
                 'user_id'   => Auth::user()->id_222290,
                 'user_role' => Auth::user()->role_222290,  // Role user, misalnya 'admin' atau 'user'
+                'email'     => Auth::user()->email_222290,  // Role user, misalnya 'admin' atau 'user'
+                'name'      => Auth::user()->name_222290,  // Role user, misalnya 'admin' atau 'user'
             ]);
 
             // Redirect berdasarkan peran pengguna

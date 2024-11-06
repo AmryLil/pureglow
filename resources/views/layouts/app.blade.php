@@ -7,6 +7,7 @@
     <title>@yield('title', 'Laravel')</title>
 
     <!-- CSS -->
+
     @vite('resources/css/app.css')
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
@@ -41,6 +42,8 @@
     <!-- Footer -->
     @include('components.footer')
 
+
+    @yield('scripts')
     <!-- Scripts -->
     <script src="{{ asset('js/handleModalProduct.js') }}"></script>
 </body>

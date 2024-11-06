@@ -26,6 +26,6 @@ class CartItem extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'id_222290');  // Ganti 'product_id_222290' dengan nama kolom yang sesuai
+        return $this->belongsTo(Product::class, 'product_id_222290', 'id_222290');
     }
 }

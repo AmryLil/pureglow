@@ -36,6 +36,7 @@
     </section>
 
     <!-- Categories Section -->
+
     <section class="py-12">
         <div class="px-32 w-full h-full">
             <h1 class="text-center text-4xl font-bold">Shop by Categories</h1>
@@ -116,5 +117,6 @@
                 </div>
             </div>
         </div>
+
     </section>
 @endsection
