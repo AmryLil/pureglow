@@ -78,10 +78,13 @@ class CategoryProductController extends Controller
 
         $category = CategoryProduct::findOrFail($id);
 
-        // Hapus gambar lama jika ada gambar baru yang diunggah
+        // Hapus gambar lama jika ada gambar baru yang diunggah dan path lama bukan URL internet
         if ($request->hasFile('path_img_222290')) {
-            if ($category->path_img_222290 && Storage::exists('public/' . $category->path_img_222290)) {
-                Storage::delete('public/' . $category->path_img_222290);
+            // Cek jika path_img_222290 adalah URL internet
+            if ($category->path_img_222290 && !filter_var($category->path_img_222290, FILTER_VALIDATE_URL)) {
+                if (Storage::exists('public/' . $category->path_img_222290)) {
+                    Storage::delete('public/' . $category->path_img_222290);
+                }
             }
 
             // Simpan gambar baru dan perbarui path

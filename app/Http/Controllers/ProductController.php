@@ -12,13 +12,23 @@ class ProductController extends Controller
     // Method untuk mengambil semua data produk
     public function index(Request $request)
     {
-        $products = Product::paginate(15);  // Mengambil semua produk dari database
+        // Mengambil semua produk dengan paginasi (15 per halaman)
+        $products = Product::paginate(15);
 
+        // Cek apakah request memiliki parameter 'page'
         if ($request->has('page')) {
             return view('list_product', compact('products'));
-        } else {
-            return view('shop', compact('products'));
         }
+
+        // Hanya mengambil produk terlaris jika halaman shop ditampilkan
+        $productsLaris = Product::skip(4)->take(4)->get();
+        return view('shop', compact('products', 'productsLaris'));
+    }
+
+    public function Best4Product(Request $request)
+    {
+        $products = Product::limit(4)->get();
+        return view('index', compact('products'));
     }
 
     // Controller: DashboardController.php

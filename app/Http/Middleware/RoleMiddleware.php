@@ -21,7 +21,7 @@ class RoleMiddleware
         $user = Auth::user();
 
         // Memeriksa apakah user memiliki salah satu role yang diperbolehkan
-        if ($user && in_array($user->role, $roles)) {
+        if ($user && in_array($user->role_222290, $roles)) {
             return $next($request);
         }
 

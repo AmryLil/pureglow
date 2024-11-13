@@ -9,9 +9,9 @@
         <div class="absolute top-0 -left-1.5 bg-slate-50 rounded-br-lg p-2 py-1 shadow">
             <img src="{{ asset('images/love.png') }}" alt="" class="w-5 translate-x-1">
         </div>
-        <div class="absolute bottom-14 -right-1.5 bg-slate-50 rounded-tl-lg p-3 py-1.5 shadow">
+        {{-- <div class="absolute bottom-14 -right-1.5 bg-slate-50 rounded-tl-lg p-3 py-1.5 shadow">
             <img src="{{ asset('images/carts.png') }}" alt="cart" class="{{ $class }} -translate-x-1">
-        </div>
+        </div> --}}
     </div>
     <!-- Text Section -->
     <div class="p-2 px-4 flex justify-center items-center">
