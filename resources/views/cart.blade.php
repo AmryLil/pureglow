@@ -41,9 +41,11 @@
                                 </div>
                             </div>
                             <div class="flex justify-center w-1/5">
-                                <input class="mx-2 border text-center w-8" type="number"
-                                    value="{{ $item->quantity_222290 }}" min="1"
-                                    onchange="updateQuantity({{ $item->id_222290 }}, this.value)">
+                                <input type="number" id="number-input" aria-describedby="helper-text-explanation"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-16 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="90210" value="{{ $item->quantity_222290 }}" min="1"
+                                    onchange="updateQuantity({{ $item->id_222290 }}, this.value)" />
+                                {{-- <input class="mx-2 border text-center w-8 text-black" type="number"> --}}
                             </div>
                             <span class="text-center w-1/5 font-semibold text-sm">Rp
                                 {{ number_format($item->product->harga_222290, 2) }}</span>
