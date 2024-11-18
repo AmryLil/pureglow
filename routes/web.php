@@ -23,10 +23,17 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/signup', [SignupController::class,  'showSignupForm'])->name('signup');
 Route::post('/signup', [SignupController::class, 'signup'])->name('signup');
 
+Route::get('/shop', [ProductController::class, 'index'])->name('products.index');
+Route::view('/about', 'about_us')->name('about');
+
+Route::get('/kategori', [CategoryProductController::class,      'index'])->name('categories');
+Route::get('/kategori/{id}', [CategoryProductController::class, 'show'])->name('categories.show');
+
 // Rute yang membutuhkan autentikasi
 Route::middleware(['auth'])->group(function () {
     // Rute produk
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products', [ProductController::class,            'index'])->name('products.index');
+    Route::get('/product/{id}', [ProductDetailsController::class, 'showProductDetails'])->name('product.show');
 
     // Route untuk cart
     Route::get('/cart', function () {
@@ -36,18 +43,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/cart/view', [CartController::class,             'showCart'])->name('cart.view');
     Route::delete('/cart/{productId}', [CartController::class,   'removeFromCart'])->name('cart.remove');
 
-    Route::get('/kategori', [CategoryProductController::class,      'index'])->name('categories');
-    Route::get('/kategori/{id}', [CategoryProductController::class, 'show'])->name('categories.show');
-
     // Route untuk transaksi
-    Route::get('/transaksi', [TransaksiController::class,           'index'])->name('transaksi.index');
+    Route::get('/transaksion', [TransaksiController::class,         'index'])->name('transaksi.index');
     Route::get('/dashboard/transaksi', [TransaksiController::class, 'showAll'])->name('transaksi.showAll');
 
     // Route untuk detail produk
-    Route::get('/product/{id}', [ProductDetailsController::class, 'showProductDetails'])->name('product.show');
 
     // Route untuk shop
-    Route::get('/shop', [ProductController::class, 'index'])->name('products.index');
 
     // Route untuk logout
     Route::post('/logout', function () {
@@ -56,8 +58,14 @@ Route::middleware(['auth'])->group(function () {
     })->name('logout');
 
     // Route pembayaran
-    Route::post('/create-transaction', [PaymentController::class,        'createTransaction']);
-    Route::post('/store-pending-transaction', [PaymentController::class, 'storePendingTransaction']);
+    // Route::post('/create-transaction', [PaymentController::class,        'createTransaction']);
+    // Route::post('/store-pending-transaction', [PaymentController::class, 'storePendingTransaction']);
+    Route::get('/transaksi', [PaymentController::class,             'index']);
+    Route::get('/transaksi/{id}', [PaymentController::class,        'show']);
+    Route::post('/transaksi', [PaymentController::class,            'store']);
+    Route::put('/transaksi/{id}', [PaymentController::class,        'update']);
+    Route::delete('/transaksi/{id}', [PaymentController::class,     'destroy']);
+    Route::post('/submit-payment-proof', [PaymentController::class, 'store']);
 });
 
 // Route dashboard khusus admin

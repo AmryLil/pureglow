@@ -13,13 +13,11 @@ return new class extends Migration {
         Schema::create('transaksi_222290', function (Blueprint $table) {
             $table->id('id_transaksi_222290');  // ID unik untuk setiap transaksi
             $table->integer('id_pelanggan_222290');  // ID pelanggan yang melakukan transaksi
-            $table->string('order_id_222290');  // ID order dari Midtrans
             $table->string('id_produk_222290');  // ID order dari Midtrans
-            $table->string('transaction_id_222290')->nullable();  // ID transaksi dari Midtrans
             $table->integer('jumlah_222290');  // Jumlah barang atau produk yang dibeli
             $table->integer('harga_total_222290');  // Total harga yang dibayar (gross amount)
             $table->string('status_222290')->default('pending');  // Status transaksi: pending, success, atau failed
-            $table->string('metode_pembayaran_222290')->nullable();  // Metode pembayaran, contoh: bank transfer, e-wallet
+            $table->string('bukti_tf_222290');  // Status transaksi: pending, success, atau failed
             $table->timestamp('tanggal_transaksi_222290')->useCurrent();  // Tanggal transaksi dibuat
             $table->timestamps();  // Tanggal dibuat dan diperbarui
         });
