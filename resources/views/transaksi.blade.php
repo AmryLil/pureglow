@@ -12,7 +12,7 @@
         @foreach ($transaksiList as $transaksi)
             <div class="bg-white p-6 rounded-lg shadow-md mb-4">
                 <div class="flex justify-between items-center mb-2">
-                    <h3 class="text-xl font-semibold">Order ID: {{ $transaksi->order_id_222290 }}</h3>
+
                     <p class="text-sm text-gray-500">Tanggal Transaksi:
                         <span
                             class="font-medium text-gray-800">{{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi_222290)->format('M d, Y') }}</span>
@@ -30,7 +30,7 @@
                                 <p class="text-sm text-gray-500">{{ $product->deskripsi_222290 }}</p>
                             </div>
                             <div class="text-right">
-                                <p class="text-lg font-semibold">${{ number_format($product->harga_222290, 2) }}</p>
+                                <p class="text-lg font-semibold">Rp {{ number_format($product->harga_222290, 2) }}</p>
                                 <p class="text-sm text-gray-500">Qty: {{ $transaksi->jumlah_222290 }}</p>
                             </div>
                         </div>
@@ -38,7 +38,8 @@
                 </div>
 
                 <div class="mt-4">
-                    <p class="text-right font-semibold">Total Harga: ${{ number_format($transaksi->harga_total_222290, 2) }}
+                    <p class="text-right font-semibold">Total Harga: Rp
+                        {{ number_format($transaksi->harga_total_222290, 2) }}
                     </p>
                 </div>
             </div>

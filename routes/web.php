@@ -60,11 +60,10 @@ Route::middleware(['auth'])->group(function () {
     // Route pembayaran
     // Route::post('/create-transaction', [PaymentController::class,        'createTransaction']);
     // Route::post('/store-pending-transaction', [PaymentController::class, 'storePendingTransaction']);
-    Route::get('/transaksi', [PaymentController::class,             'index']);
-    Route::get('/transaksi/{id}', [PaymentController::class,        'show']);
-    Route::post('/transaksi', [PaymentController::class,            'store']);
-    Route::put('/transaksi/{id}', [PaymentController::class,        'update']);
-    Route::delete('/transaksi/{id}', [PaymentController::class,     'destroy']);
+    Route::get('/transaksi', [PaymentController::class,      'index']);
+    Route::get('/transaksi/{id}', [PaymentController::class, 'show']);
+    Route::post('/transaksi', [PaymentController::class,     'store']);
+
     Route::post('/submit-payment-proof', [PaymentController::class, 'store']);
 });
 
@@ -84,7 +83,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/dashboard/produk/{id}', [ProductController::class,      'update'])->name('products.update');
     Route::delete('/dashboard/produk/{id}', [ProductController::class,   'destroy'])->name('products.destroy');
 
-    // Rute kategori
+    // Transaksi
+    Route::put('/transaksi/{id}', [PaymentController::class,    'update']);
+    Route::delete('/transaksi/{id}', [PaymentController::class, 'destroy'])->name('transaksi.destroy');
 
     Route::prefix('dashboard')->group(function () {
         Route::get('/kategori', [CategoryProductController::class,             'kategori_dashboard'])->name('dashboard.kategori.index');

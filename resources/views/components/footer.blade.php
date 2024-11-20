@@ -1,10 +1,9 @@
 <footer class="bg-white  shadow mt-10 px-32">
     <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div class="sm:flex sm:items-center sm:justify-between">
-            <a href="https://flowbite.com/" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-                <img src={{ asset('images/logo.png') }} alt="" class="w-32">
-
-            </a>
+            <div class="text-2xl text-slate-700">
+                <img src="{{ asset('images/logo1.png') }}" alt="" class="w-[140px]">
+            </div>
             <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 ">
                 <li>
                     <a href="#" class="hover:underline me-4 md:me-6">About</a>

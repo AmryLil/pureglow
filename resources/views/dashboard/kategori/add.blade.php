@@ -1,7 +1,7 @@
 @extends('layouts.dashboard-layout')
 
 @section('content')
-    <div class="container mx-auto p-4">
+    <div class="container mx-auto p-4 pt-20">
         <h1 class="text-3xl font-bold mb-6 text-gray-800">Tambah Kategori Baru</h1>
 
         <form action="{{ route('dashboard.category_products.store') }}" method="POST" enctype="multipart/form-data"
@@ -14,6 +14,7 @@
                 <input type="text" name="nama_222290" id="nama_222290"
                     class="border border-gray-300 p-3 rounded-lg w-full" placeholder="Masukkan nama kategori" required>
             </div>
+
 
             <!-- Deskripsi Kategori -->
             <div class="mb-5">

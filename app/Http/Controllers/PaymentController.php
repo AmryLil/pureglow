@@ -60,19 +60,6 @@ class PaymentController extends Controller
 
         $totalPrice    = 0;
         $totalQuantity = 0;
-        $productIds    = [];  // Array untuk menyimpan id produk
-
-        // Hitung total harga dan jumlah serta kumpulkan id produk
-        foreach ($cartItems as $item) {
-            if ($item->product) {
-                $totalPrice    += $item->product->harga_222290 * $item->quantity_222290;
-                $totalQuantity += $item->quantity_222290;
-                $productIds[]   = $item->product->id_222290;  // Menyimpan id produk dalam array
-            } else {
-                // Jika produk tidak ditemukan
-                return response()->json(['message' => 'Produk dengan ID ' . $item->product_id_222290 . ' tidak ditemukan'], 404);
-            }
-        }
 
         // Simpan file bukti transfer
         try {
@@ -81,13 +68,33 @@ class PaymentController extends Controller
             return response()->json(['message' => 'Gagal menyimpan bukti transfer', 'error' => $e->getMessage()], 500);
         }
 
-        // Buat transaksi baru untuk setiap produk
-        foreach ($productIds as $productId) {
-            $transaksi = Transaksi::create([
+        // Proses transaksi dan pengurangan stok produk
+        foreach ($cartItems as $item) {
+            $product = $item->product;
+
+            if (!$product) {
+                return response()->json(['message' => 'Produk dengan ID ' . $item->product_id_222290 . ' tidak ditemukan'], 404);
+            }
+
+            // Periksa apakah stok cukup
+            if ($product->jumlah_222290 < $item->quantity_222290) {
+                return response()->json(['message' => 'Stok produk ' . $product->nama_222290 . ' tidak mencukupi'], 400);
+            }
+
+            // Hitung total harga dan jumlah
+            $totalPrice    += $product->harga_222290 * $item->quantity_222290;
+            $totalQuantity += $item->quantity_222290;
+
+            // Kurangi stok produk
+            $product->jumlah_222290 -= $item->quantity_222290;
+            $product->save();
+
+            // Buat transaksi baru
+            Transaksi::create([
                 'id_pelanggan_222290'      => $userId,
-                'jumlah_222290'            => $totalQuantity,
-                'id_produk_222290'         => $productId,  // Simpan id produk per transaksi
-                'harga_total_222290'       => $totalPrice,
+                'jumlah_222290'            => $item->quantity_222290,
+                'id_produk_222290'         => $product->id_222290,
+                'harga_total_222290'       => $product->harga_222290 * $item->quantity_222290,
                 'status_222290'            => 'success',
                 'bukti_tf_222290'          => $path,
                 'tanggal_transaksi_222290' => Carbon::now(),
@@ -99,7 +106,6 @@ class PaymentController extends Controller
 
         // Hapus keranjang jika sudah kosong
         $cart->delete();
-        $transaksi = 'success';
 
         return response()->json(['message' => 'Pembayaran berhasil disimpan', 'data' => 'success'], 201);
     }
@@ -137,6 +143,6 @@ class PaymentController extends Controller
 
         $transaksi->delete();
 
-        return response()->json(['message' => 'Transaksi berhasil dihapus']);
+        return redirect()->back()->with('success', 'Transaksi berhasil dihapus.');
     }
 }

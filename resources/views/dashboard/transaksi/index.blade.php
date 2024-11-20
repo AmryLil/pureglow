@@ -1,13 +1,14 @@
 @extends('layouts.dashboard-layout')
 
 @section('content')
-    <div class="container mx-auto py-6 rounded-md">
+    <div class="container mx-auto py-6 rounded-md pt-20">
         <div class="flex justify-between items-center mb-2 bg-slate-50 p-2">
-            <div class="p-2 pl-9 text-4xl text-slate-950 p-2 rounded font-bold w-[100vh]">List Transaksi Pengguna
+            <div
+                class="flex bg-slate-900 text-xl text-slate-50 justify-between items-center rounded font-semibold w-full p-4 py-2 rounded-xl">
+                <div>Kelola Semua Transaksi Disini</div>
+
             </div>
-
         </div>
-
 
         <div class="overflow-x-auto bg-slate-50 p-2">
             <table class="table table-zebra">
@@ -18,7 +19,6 @@
                         <th class="">Jumlah</th>
                         <th class="">Harga Total</th>
                         <th class="">Status</th>
-                        <th class="">Metode Pembayaran</th>
                         <th class="">Tanggal Transaksi</th>
                         <th>Action</th>
                     </tr>
@@ -27,36 +27,17 @@
                     @forelse ($transaksis as $transaksi)
                         <tr>
                             <td class="">{{ $loop->iteration }}</td>
-                            <td class="">{{ $transaksi->id_pelanggan_222290 }}</td>
+                            <td class="">{{ $transaksi->pelanggan->name_222290 ?? 'Nama Tidak Ditemukan' }}</td>
                             <td class="">{{ $transaksi->jumlah_222290 }}</td>
                             <td class="">Rp {{ number_format($transaksi->harga_total_222290, 2) }}</td>
                             <td class="">{{ $transaksi->status_222290 }}</td>
-                            <td class="">{{ $transaksi->metode_pembayaran_222290 }}</td>
                             <td class="">{{ $transaksi->tanggal_transaksi_222290 }}</td>
                             <td>
                                 <ul class="menu menu-horizontal bg-base-100 rounded-box p-0">
+
                                     <li>
-                                        <a href="#" class="tooltip" data-tip="Edit">
-                                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 48 48" id="Pencil-Circle--Streamline-Plump" height="48"
-                                                width="48">
-                                                <desc>Pencil Circle Streamline Icon: https://streamlinehq.com</desc>
-                                                <g id="pencil-circle--change-circle-edit-modify-pencil-write-writing">
-                                                    <path id="Rectangle 1098" fill="#f5dd3a"
-                                                        d="M44.42 14.557c1.546 -1.546 2.146 -3.798 0.937 -5.62 -0.655 -0.986 -1.574 -2.156 -2.856 -3.438 -1.282 -1.282 -2.452 -2.201 -3.438 -2.856 -1.822 -1.21 -4.074 -0.61 -5.62 0.937L16.198 20.825c-0.578 0.578 -0.974 1.312 -1.053 2.126 -0.133 1.381 -0.256 3.962 0.024 7.967a2.063 2.063 0 0 0 1.913 1.913c4.005 0.28 6.586 0.157 7.967 0.024 0.814 -0.079 1.548 -0.475 2.126 -1.053L44.42 14.557Z"
-                                                        stroke-width="1"></path>
-                                                    <path id="Subtract" fill="#dfc40f"
-                                                        d="M28.555 4.225 14.077 18.703c-0.983 0.983 -1.761 2.338 -1.918 3.96 -0.15 1.561 -0.273 4.309 0.018 8.464a5.063 5.063 0 0 0 4.695 4.696c4.156 0.29 6.904 0.169 8.465 0.018 1.622 -0.157 2.977 -0.935 3.96 -1.918l14.478 -14.479A21.53 21.53 0 0 1 44.5 25c0 11.874 -9.626 21.5 -21.5 21.5S1.5 36.874 1.5 25 11.126 3.5 23 3.5c1.921 0 3.783 0.252 5.555 0.725Z"
-                                                        stroke-width="1"></path>
-                                                    <path id="Intersect" fill="#8fbffa"
-                                                        d="M43.775 15.202c-1.083 -1.72 -2.655 -3.79 -4.92 -6.056 -2.267 -2.266 -4.337 -3.838 -6.057 -4.92l-3.649 3.647c1.517 0.84 3.67 2.308 6.17 4.808s3.967 4.653 4.807 6.17l3.649 -3.649Z"
-                                                        stroke-width="1"></path>
-                                                </g>
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <form action="#" method="POST"
+                                        <form action="{{ route('transaksi.destroy', $transaksi->id_transaksi_222290) }}"
+                                            method="POST"
                                             onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
                                             @csrf
                                             @method('DELETE')

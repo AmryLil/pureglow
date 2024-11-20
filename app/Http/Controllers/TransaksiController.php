@@ -36,9 +36,7 @@ class TransaksiController extends Controller
     public function showAll()
     {
         // Mengambil semua data transaksi
-        $transaksis = Transaksi::all();
-
-        // Menampilkan data ke dalam view 'transaksi.index'
+        $transaksis = Transaksi::with('pelanggan')->get();
         return view('dashboard.transaksi.index', compact('transaksis'));
     }
 }

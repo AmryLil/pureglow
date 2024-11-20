@@ -11,7 +11,9 @@ class Transaksi extends Model
 {
     use HasFactory;
 
-    protected $table = 'transaksi_222290';  // Nama tabel di database
+    protected $table      = 'transaksi_222290';
+    protected $primaryKey = 'id_transaksi_222290';
+    // Nama tabel di database
 
     protected $fillable = [
         'id_pelanggan_222290',
@@ -22,4 +24,9 @@ class Transaksi extends Model
         'bukti_tf_222290',
         'tanggal_transaksi_222290'
     ];
+
+    public function pelanggan()
+    {
+        return $this->belongsTo(User::class, 'id_pelanggan_222290', 'id_222290');  // Foreign key dan primary key
+    }
 }

@@ -5,7 +5,7 @@
 
 @section('content')
     <!-- Dashboard Form for Product -->
-    <div class="bg-white shadow rounded-lg p-4 w-full">
+    <div class="bg-white shadow rounded-lg p-4 w-full pt-20">
         <form class="w-full" method="POST" action="{{ route('products.store') }}"> <!-- Tentukan route penyimpanan -->
             @csrf
             <div class="mb-5">

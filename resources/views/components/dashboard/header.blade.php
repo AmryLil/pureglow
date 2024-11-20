@@ -1,13 +1,11 @@
-<header class="flex items-center justify-between px-5 py-1  sm:ml-64 ">
-
-
-    <header class="w-full flex items-center justify-between p-4 bg-white shadow">
-        <div class="flex flex-col">
+<div class="w-full">
+    <header class="w-[81%] left-64 top-0 flex fixed items-center justify-between p-4 bg-white shadow z-50">
+        <div class="flex flex-col z-50">
             <h1 class="font-bold text-2xl text-slate-950">Dashboard</h1>
             <h3 class="font-light text-lg text-slate-700">main</h3>
         </div>
         <div class="flex items-center flex space-x-4">
-            <label class="input input-bordered flex items-center gap-2">
+            <label class="input input-bordered flex items-center gap-2 invisible">
                 <input type="text" class="grow" placeholder="Search" />
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
                     class="h-4 w-4 opacity-70">
@@ -37,4 +35,4 @@
             </div>
         </div>
     </header>
-</header>
+</div>

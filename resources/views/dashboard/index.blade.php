@@ -5,7 +5,7 @@
 
 @section('content')
     <!-- Dashboard Stat Cards -->
-    <div class="bg-white shadow rounded-lg p-4">
+    <div class="bg-white shadow rounded-lg p-4 pt-20">
         <div class="grid grid-cols-4 gap-4 mb-4">
             <div class="flex flex-col items-center justify-center h-24 rounded bg-gray-100 dark:bg-gray-800 gap-2">
                 <div class="flex gap-2">

@@ -2,7 +2,7 @@
 @extends('layouts.dashboard-layout')
 
 @section('content')
-    <div class="container mx-auto">
+    <div class="container mx-auto pt-20">
         <h1 class="text-2xl font-semibold mb-4">Tambah Produk</h1>
 
         <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
@@ -21,7 +21,10 @@
                 <label for="harga_222290" class="block">Harga</label>
                 <input type="number" name="harga_222290" class="border p-2 w-full" required>
             </div>
-
+            <div class="mb-4">
+                <label for="jumlah_222290" class="block ">Jumlah Produk</label>
+                <input type="number" name="jumlah_222290" id="jumlah_222290" class="border p-2 w-full   " required>
+            </div>
             <div class="mb-4">
                 <label for="kategori_id_222290" class="block">Kategori</label>
                 <select name="kategori_id_222290" class="border p-2 w-full" required>

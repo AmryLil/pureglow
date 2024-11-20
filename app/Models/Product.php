@@ -24,6 +24,7 @@ class Product extends Model
         'harga_222290',
         'kategori_id_222290',
         'path_img_222290',
+        'jumlah_222290',
         // tambahkan kolom lain sesuai kebutuhan
     ];
 

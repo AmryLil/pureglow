@@ -1,7 +1,7 @@
 @extends('layouts.dashboard-layout')
 
 @section('content')
-    <div class="container mx-auto mt-8">
+    <div class="container mx-auto mt-8 pt-20">
         <h1 class="text-2xl font-semibold mb-6">Edit Kategori</h1>
 
         <form action="{{ route('dashboard.category_products.update', $category->id_222290) }}" method="POST"

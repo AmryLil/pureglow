@@ -9,7 +9,7 @@
                 <!-- Product Image -->
                 <div class="w-1/2 flex justify-center relative h-[80vh]">
                     <img src="{{ Str::startsWith($product->path_img_222290, 'http') ? $product->path_img_222290 : asset('storage/images/' . $product->path_img_222290) }}"
-                        alt="Product Image" class="object-contain h-full">
+                        alt="Product Image" class="object-cover h-full">
                 </div>
 
                 <!-- Product Details -->
@@ -26,6 +26,7 @@
                             <p class="text-xl text-gray-900 font-light">Description</p>
                             <p class="text-lg">{{ $product->deskripsi_222290 }}</p>
                         </div>
+
                         <div class="flex justify-start mt-5 items-center space-x-4">
                             <!-- Quantity Controls -->
                             <div class="text-lg font-semibold">Quantity</div>
@@ -36,6 +37,10 @@
                                 <button id="increment"
                                     class="bg-gray-200 text-gray-800 font-bold rounded-sm h-6 w-6 flex justify-center items-center hover:bg-gray-300">+</button>
                             </div>
+                        </div>
+                        <div class="mt-6 text-base ">
+                            <p class="text-xl text-gray-900 font-light">Jumlah</p>
+                            <p class="text-lg font-bold">{{ $product->jumlah_222290 }} Barang</p>
                         </div>
                     </div>
 
@@ -71,13 +76,13 @@
             </div>
 
             {{-- Another Product Section --}}
-            <div>
+            {{-- <div>
                 <div class="flex justify-center items-center">
                     <div class="h-0.5 bg-black w-full mt-10"></div>
                     <h2 class="text-2xl font-semibold mt-10 text-center w-[800px]">ANOTHER PRODUCTS</h2>
                     <div class="h-0.5 bg-black w-full mt-10"></div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection

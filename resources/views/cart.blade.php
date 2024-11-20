@@ -128,6 +128,31 @@
 
 @section('scripts')
     <script>
+        function removeItemFromCart(productId) {
+            fetch(`/cart/${productId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Product removed from cart successfully') {
+                        alert('Item removed from cart');
+                        window.location.reload();
+                        // Bisa tambahkan logika untuk mengupdate tampilan cart
+                    } else {
+                        alert(data.message); // Tampilkan pesan error jika ada
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to remove item from cart');
+                });
+        }
+    </script>
+    <script>
         function previewReceipt() {
             const receiptInput = document.getElementById('receipt');
             const receiptPreview = document.getElementById('receipt-preview');

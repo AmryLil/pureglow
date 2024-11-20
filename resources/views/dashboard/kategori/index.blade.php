@@ -3,13 +3,17 @@
 
 @section('content')
     <!-- Dashboard Stat Cards -->
-    <div class="shadow rounded-lg">
-        <div class="flex justify-between items-center mb-2 bg-slate-50 p-2">
-            <div class="p-2 bg-slate-900 text-xl text-slate-50 p-2 rounded font-semibold w-[100vh]">Kelola Data Kategori
-                Disini</div>
-            <a href="{{ route('dashboard.category_products.create') }}">
-                <button class="btn btn-outline h-2 my-4">Tambah Kategori</button>
-            </a>
+    <div class="shadow rounded-lg pt-20">
+        <div class="flex justify-between mb-2 w-full items-center bg-slate-50 p-2">
+            <div
+                class="flex bg-slate-900 text-xl text-slate-50 justify-between items-center rounded font-semibold w-full p-4 py-2 rounded-xl">
+                <div>Kelola Data Kategori
+                    Disini</div>
+                <a href="{{ route('dashboard.category_products.create') }}">
+                    <button class="btn btn-outline h-2 my-4 bg-slate-50 text-slate-900">Tambah Kategori</button>
+                </a>
+            </div>
+
         </div>
         <div class="overflow-x-auto bg-slate-50 p-2">
             <table class="table">

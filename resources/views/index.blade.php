@@ -28,7 +28,7 @@
             </div>
             <div class="relative">
                 <div class="w-[500px] h-[450px] overflow-hidden shadow-lg border_custom">
-                    <img src={{ asset('images/tangan2.png') }} alt="Skincare Model"
+                    <img src={{ asset('images/banner/banner2.png') }} alt="Skincare Model"
                         class="w-full h-full object-cover shadow-lg shadow-slate-900">
                 </div>
             </div>

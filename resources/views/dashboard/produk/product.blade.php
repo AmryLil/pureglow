@@ -5,13 +5,15 @@
 
 @section('content')
     <!-- Dashboard Stat Cards -->
-    <div class="shadow rounded-lg ">
+    <div class="shadow rounded-lg pt-20">
         <div class="flex justify-between items-center mb-2 bg-slate-50 p-2">
-            <div class="p-2 bg-slate-900 text-xl text-slate-50 p-2 rounded font-semibold w-[100vh]">Kelola Data Barang Disini
+            <div
+                class="flex bg-slate-900 text-xl text-slate-50 justify-between items-center rounded font-semibold w-full p-4 py-2 rounded-xl">
+                <div>Kelola Semua Data Produk</div>
+                <a href="{{ route('products.create') }}">
+                    <button class="btn btn-outline h-2 my-4 bg-slate-50 text-slate-900">Tambah Produk</button>
+                </a>
             </div>
-            <a href="{{ route('products.create') }}">
-                <button class="btn btn-outline h-2 my-4">Tambah Barang</button>
-            </a>
         </div>
         <div class="overflow-x-auto bg-slate-50 p-2">
             <table class="table">
@@ -23,6 +25,7 @@
                         <th>Deskripsi</th>
                         <th>Kategori</th>
                         <th>Harga</th>
+                        <th>Jumlah</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -34,6 +37,8 @@
                             <td>{{ Str::words($product->deskripsi_222290, 5, '...') }}</td>
                             <td>{{ $product->category->nama_222290 ?? 'Tidak ada kategori' }}</td>
                             <td>Rp {{ $product->harga_222290 }}</td>
+                            <td>{{ $product->jumlah_222290 }}</td>
+
                             <td>
                                 <ul class=" menu menu-horizontal bg-base-100 rounded-box p-0">
 
