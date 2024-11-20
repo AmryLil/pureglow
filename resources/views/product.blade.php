@@ -32,13 +32,13 @@
                             <div class="text-lg font-semibold">Quantity</div>
                             <div class="flex gap-2">
                                 <button id="decrement"
-                                    class="bg-gray-200 text-gray-800 font-bold rounded-sm h-6 w-6 flex justify-center items-center hover:bg-gray-300">-</button>
+                                    class="quantity-control bg-gray-200 text-gray-800 font-bold rounded-sm h-6 w-6 flex justify-center items-center hover:bg-gray-300">-</button>
                                 <span id="qty" class="text-base font-semibold">1</span>
                                 <button id="increment"
-                                    class="bg-gray-200 text-gray-800 font-bold rounded-sm h-6 w-6 flex justify-center items-center hover:bg-gray-300">+</button>
+                                    class="quantity-control bg-gray-200 text-gray-800 font-bold rounded-sm h-6 w-6 flex justify-center items-center hover:bg-gray-300">+</button>
                             </div>
                         </div>
-                        <div class="mt-6 text-base ">
+                        <div class="mt-6 text-base">
                             <p class="text-xl text-gray-900 font-light">Jumlah</p>
                             <p class="text-lg font-bold">{{ $product->jumlah_222290 }} Barang</p>
                         </div>
@@ -52,7 +52,7 @@
 
                         <!-- Add to Cart Button -->
                         <div class="mt-2 mb-2 flex justify-center w-full gap-2">
-                            <button id="pay-button"
+                            <button id="co" onclick="showPaymentModal()"
                                 class="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-900 w-[80%]">
                                 Checkout Now
                             </button>
@@ -74,40 +74,100 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            {{-- Another Product Section --}}
-            {{-- <div>
-                <div class="flex justify-center items-center">
-                    <div class="h-0.5 bg-black w-full mt-10"></div>
-                    <h2 class="text-2xl font-semibold mt-10 text-center w-[800px]">ANOTHER PRODUCTS</h2>
-                    <div class="h-0.5 bg-black w-full mt-10"></div>
+        <!-- Payment Modal -->
+        <div id="payment-modal"
+            class="fixed z-50 inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center overflow-auto">
+            <div class="bg-white rounded-lg w-1/3 p-5">
+                <h2 class="text-xl font-bold mb-4">Transfer Bank</h2>
+                <p>Silakan transfer jumlah total ke rekening bank berikut:</p>
+                <div class="my-4">
+                    <strong>Nama Bank: BCA</strong><br>
+                    <strong>No. Rekening: 1234567890</strong><br>
+                    <strong>Nama Pemilik Rekening: PT. MaskGlow</strong>
                 </div>
-            </div> --}}
+
+                <div class="border-t my-4 py-2">
+                    <h3 class="font-semibold">Barang yang Dibeli:</h3>
+                    <ul class="list-disc list-inside">
+                        <li>{{ $product->nama_222290 }}</li>
+                    </ul>
+                </div>
+
+                <div class="flex justify-between font-bold mt-4">
+                    <span>Total:</span>
+                    <span>Rp {{ $product->harga_222290 }}</span>
+                </div>
+
+                <form id="upload-receipt-form" enctype="multipart/form-data" class="mt-4">
+                    <label class="block mb-2">Unggah Bukti Pembayaran:</label>
+                    <input type="file" name="receipt" id="receipt" class="border p-2 w-full" accept="image/*" required
+                        onchange="previewReceipt()">
+                </form>
+
+                <div id="receipt-preview" class="mt-4 hidden">
+                    <h3 class="font-semibold mb-2">Pratinjau Bukti Pembayaran:</h3>
+                    <img id="receipt-image" src="" alt="Bukti Pembayaran" class="w-full rounded shadow-lg">
+                </div>
+
+                <div class="flex justify-end mt-5">
+                    <button onclick="closePaymentModal()"
+                        class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded mr-2">Tutup</button>
+                    <button onclick="submitPaymentProof()"
+                        class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">Kirim</button>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
 
 @section('scripts')
     <script>
-        // Handle Increment and Decrement for Quantity
-        document.getElementById('increment').addEventListener('click', function() {
-            let qty = parseInt(document.getElementById('qty').innerText);
-            document.getElementById('qty').innerText = ++qty;
-            document.getElementById('inputQty').value = qty;
-        });
+        // Toggle Modal
+        function toggleModal(modalId, show = true) {
+            const modal = document.getElementById(modalId);
+            modal.classList.toggle('hidden', !show);
+        }
 
-        document.getElementById('decrement').addEventListener('click', function() {
-            let qty = parseInt(document.getElementById('qty').innerText);
-            if (qty > 1) {
-                document.getElementById('qty').innerText = --qty;
-                document.getElementById('inputQty').value = qty;
+        function showPaymentModal() {
+            if (!isUserLoggedIn()) {
+                // Jika pengguna belum login, arahkan ke halaman login
+                window.location.href = "{{ route('login') }}";
+                return; // Hentikan eksekusi fungsi
             }
+            document.getElementById('payment-modal').classList.remove('hidden');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('payment-modal').classList.add('hidden');
+        }
+
+        // Quantity Controls
+        document.querySelectorAll('.quantity-control').forEach(button => {
+            button.addEventListener('click', function() {
+                const qtyElement = document.getElementById('qty');
+                let qty = parseInt(qtyElement.innerText);
+                if (this.id === 'increment') qtyElement.innerText = ++qty;
+                else if (this.id === 'decrement' && qty > 1) qtyElement.innerText = --qty;
+            });
         });
 
-        // Handle Add to Cart via AJAX
+        // Pengecekan login
+        function isUserLoggedIn() {
+            return {{ auth()->check() ? 'true' : 'false' }}; // Mengecek login di sisi server
+        }
+
+        // Add to Cart
         document.getElementById('add-to-cart').addEventListener('click', function() {
-            let qty = parseInt(document.getElementById('qty').innerText);
-            let productId = {{ $product->id_222290 }}; // Ambil ID produk dari Blade
+            if (!isUserLoggedIn()) {
+                // Jika pengguna belum login, arahkan ke halaman login
+                window.location.href = "{{ route('login') }}";
+                return; // Hentikan eksekusi fungsi
+            }
+
+            const qty = parseInt(document.getElementById('qty').innerText);
+            const productId = {{ $product->id_222290 }};
 
             fetch(`{{ route('cart.add', ':id') }}`.replace(':id', productId), {
                     method: 'POST',
@@ -119,116 +179,67 @@
                         quantity: qty
                     })
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(data);
-                    document.getElementById('my_modal_3').showModal(); // Tampilkan modal
-                })
-                .catch((error) => {
-                    console.error('There has been a problem with your fetch operation:', error);
-                });
-        });
-    </script>
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-uWS7H-PNyLQB8VKx"></script>
-    <script>
-        document.getElementById('pay-button').onclick = function() {
-
-            const totalAmount = {{ $product->harga_222290 }}; // Total biaya transaksi termasuk ongkos kirim
-            const customerId = {{ session('user_id') }}; // Ambil ID pelanggan yang sedang login
-            const name = "{{ session('name') }}"; // Ambil nama pelanggan yang sedang login
-            const email = "{{ session('email') }}"; // Ambil email pelanggan yang sedang login
-
-            // Ambil ID produk dari cart
-            const productIds = {{ $product->count() }};
-            console.log(productIds, totalAmount)
-
-
-            // Buat transaksi di server
-            fetch('/create-transaction', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        amount: totalAmount,
-                        first_name: name,
-                        email: email,
-                        customer_id: customerId
-                    })
-                })
                 .then(response => response.json())
-                .then(data => {
-                    if (data.snapToken) {
-                        window.snap.pay(data.snapToken, {
-                            onSuccess: function(result) {
-                                alert("Pembayaran berhasil");
-                                console.log(result);
-                                postTransactionData(result, 'success', customerId, productIds);
-                            },
-                            onPending: function(result) {
-                                alert("Menunggu pembayaran");
-                                console.log(result);
-                                postTransactionData(result, 'pending', customerId, productIds);
-                            },
-                            onError: function(result) {
-                                alert("Pembayaran gagal");
-                                console.log(result);
-                                postTransactionData(result, 'failed', customerId, productIds);
-                            },
-                            onClose: function() {
-                                alert("Anda menutup popup tanpa menyelesaikan pembayaran");
-                            }
-                        });
-                    } else {
-                        console.error(data.error);
-                        alert("Terjadi kesalahan saat membuat transaksi.");
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert("Terjadi kesalahan. Silakan coba lagi.");
-                });
-        };
+                .then(() => document.getElementById('my_modal_3').showModal())
+                .catch(console.error);
+        });
 
-        function postTransactionData(result, status, customerId, productIds) {
-            let qty = parseInt(document.getElementById('qty').innerText);
-            console.log("qty : " +
-                qty)
-            const totalAmount = {{ $product->harga_222290 }}; // Total biaya transaksi termasuk ongkos kirim
+        // Receipt Preview
+        function previewReceipt() {
+            const receiptInput = document.getElementById('receipt');
+            const receiptPreview = document.getElementById('receipt-preview');
+            const receiptImage = document.getElementById('receipt-image');
 
-            const transactionData = {
-                id_pelanggan: customerId,
-                order_id: result.order_id,
-                transaction_id: result.transaction_id,
-                jumlah: qty,
-                harga_total: totalAmount,
-                status: status,
-                metode_pembayaran: result.payment_type,
-                product_ids: productIds + ''
-            };
+            if (receiptInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    receiptImage.src = e.target.result;
+                    receiptPreview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(receiptInput.files[0]);
+            } else {
+                receiptPreview.classList.add('hidden');
+            }
+        }
 
-            fetch('/store-pending-transaction', {
+        // Submit Payment Proof
+        async function submitPaymentProof() {
+            if (!isUserLoggedIn()) {
+                // Jika pengguna belum login, arahkan ke halaman login
+                window.location.href = "{{ route('login') }}";
+                return; // Hentikan eksekusi fungsi
+            }
+
+            const formData = new FormData(document.getElementById('upload-receipt-form'));
+            const productId = {{ $product->id_222290 }};
+            const quantity = document.getElementById('qty').innerText;
+
+            formData.append('product_id', productId);
+            formData.append('quantity', quantity);
+
+            try {
+                const response = await fetch(`{{ route('checkout.single', ':productId') }}`.replace(':productId',
+                    productId), {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
-                    body: JSON.stringify(transactionData)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        console.log("Data transaksi " + status + " berhasil disimpan.");
-                    } else {
-                        console.error("Gagal menyimpan data transaksi " + status + ".");
-                    }
-                })
-                .catch(error => console.error('Error:', error));
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    alert('Payment proof submitted successfully!');
+                    toggleModal('payment-modal', false);
+                    window.location.reload();
+                } else {
+                    const errorData = await response.json();
+                    alert(`Failed to submit payment proof: ${errorData.message}`);
+                    window.location.reload();
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Error submitting payment proof.');
+            }
         }
     </script>
 @endsection

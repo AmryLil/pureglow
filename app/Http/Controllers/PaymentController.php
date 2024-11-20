@@ -145,4 +145,59 @@ class PaymentController extends Controller
 
         return redirect()->back()->with('success', 'Transaksi berhasil dihapus.');
     }
+
+    public function checkoutSingleProduct(Request $request, $productId)
+    {
+        // Validasi input untuk bukti transfer
+        $validated = $request->validate([
+            'receipt'  => 'required|image|max:2048',  // Bukti transfer wajib berupa gambar
+            'quantity' => 'required|integer|min:1'  // Jumlah produk yang dibeli
+        ]);
+
+        // Ambil pengguna dari session
+        $userId = session('user_id');
+
+        if (!$userId) {
+            return response()->json(['message' => 'Pengguna tidak ditemukan'], 403);
+        }
+
+        // Ambil data produk berdasarkan ID
+        $product = \App\Models\Product::find($productId);
+
+        if (!$product) {
+            return response()->json(['message' => 'Produk tidak ditemukan'], 404);
+        }
+
+        // Periksa apakah stok mencukupi
+        if ($product->jumlah_222290 < $validated['quantity']) {
+            return response()->json(['message' => 'Stok produk tidak mencukupi'], 400);
+        }
+
+        // Simpan bukti transfer
+        try {
+            $path = $request->file('receipt')->store('bukti_transfer', 'public');
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal menyimpan bukti transfer', 'error' => $e->getMessage()], 500);
+        }
+
+        // Kurangi stok produk
+        $product->jumlah_222290 -= $validated['quantity'];
+        $product->save();
+
+        // Buat transaksi baru
+        $transaksi = Transaksi::create([
+            'id_pelanggan_222290'      => $userId,
+            'jumlah_222290'            => $validated['quantity'],
+            'id_produk_222290'         => $product->id_222290,
+            'harga_total_222290'       => $product->harga_222290 * $validated['quantity'],
+            'status_222290'            => 'pending',
+            'bukti_tf_222290'          => $path,
+            'tanggal_transaksi_222290' => Carbon::now(),
+        ]);
+
+        return response()->json([
+            'message'   => 'Checkout berhasil',
+            'transaksi' => $transaksi
+        ], 201);
+    }
 }

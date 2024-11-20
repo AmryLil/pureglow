@@ -28,12 +28,16 @@ Route::view('/about', 'about_us')->name('about');
 
 Route::get('/kategori', [CategoryProductController::class,      'index'])->name('categories');
 Route::get('/kategori/{id}', [CategoryProductController::class, 'show'])->name('categories.show');
+Route::get('/product/{id}', [ProductDetailsController::class,   'showProductDetails'])->name('product.show');
+// web.php
+Route::get('/check-login', function () {
+    return response()->json(['is_logged_in' => Auth::check()]);
+})->name('check.login');
 
 // Rute yang membutuhkan autentikasi
 Route::middleware(['auth'])->group(function () {
     // Rute produk
-    Route::get('/products', [ProductController::class,            'index'])->name('products.index');
-    Route::get('/product/{id}', [ProductDetailsController::class, 'showProductDetails'])->name('product.show');
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
     // Route untuk cart
     Route::get('/cart', function () {
@@ -64,7 +68,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transaksi/{id}', [PaymentController::class, 'show']);
     Route::post('/transaksi', [PaymentController::class,     'store']);
 
-    Route::post('/submit-payment-proof', [PaymentController::class, 'store']);
+    Route::post('/submit-payment-proof', [PaymentController::class,        'store']);
+    Route::post('/checkout/single/{productId}', [PaymentController::class, 'checkoutSingleProduct'])->name('checkout.single');
 });
 
 // Route dashboard khusus admin
