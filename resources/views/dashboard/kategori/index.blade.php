@@ -9,12 +9,18 @@
                 class="flex bg-slate-900 text-xl text-slate-50 justify-between items-center rounded font-semibold w-full p-4 py-2 rounded-xl">
                 <div>Kelola Data Kategori
                     Disini</div>
-                <a href="{{ route('dashboard.category_products.create') }}">
-                    <button class="btn btn-outline h-2 my-4 bg-slate-50 text-slate-900">Tambah Kategori</button>
-                </a>
+                <div class="flex gap-2">
+                    <a href="{{ route('dashboard.category_products.create') }}">
+                        <button class="btn btn-outline h-2 my-4 bg-slate-50 text-slate-900">Tambah Kategori</button>
+                    </a>
+                    <a href="{{ route('kategori.generatePdf') }}" class="btn btn-outline my-4 bg-slate-50 text-slate-900">
+                        Unduh PDF
+                    </a>
+                </div>
             </div>
 
         </div>
+
         <div class="overflow-x-auto bg-slate-50 p-2">
             <table class="table">
                 <!-- head -->

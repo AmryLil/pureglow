@@ -4,7 +4,7 @@
             <h1 class="font-bold text-2xl text-slate-950">Dashboard</h1>
             <h3 class="font-light text-lg text-slate-700">main</h3>
         </div>
-        <div class="flex items-center flex space-x-4">
+        <div class="flex items-center  space-x-4">
             <label class="input input-bordered flex items-center gap-2 invisible">
                 <input type="text" class="grow" placeholder="Search" />
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
@@ -24,7 +24,6 @@
 
                 <ul tabindex="0"
                     class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-
                     <li>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf

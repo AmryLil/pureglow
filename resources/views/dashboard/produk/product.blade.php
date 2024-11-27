@@ -1,11 +1,10 @@
-<!-- resources/views/dashboard.blade.php -->
 @extends('layouts.dashboard-layout')
 
 @section('title', $title)
 
 @section('content')
-    <!-- Dashboard Stat Cards -->
-    <div class="shadow rounded-lg pt-20">
+    <!-- Dashboard Header -->
+    <div class="shadow rounded-lg pt-20 w-full">
         <div class="flex justify-between items-center mb-2 bg-slate-50 p-2">
             <div
                 class="flex bg-slate-900 text-xl text-slate-50 justify-between items-center rounded font-semibold w-full p-4 py-2 rounded-xl">
@@ -15,10 +14,29 @@
                 </a>
             </div>
         </div>
+
+        <!-- Filter Form -->
+        <div class="flex gap-2 justify-between w-full px-2">
+            <form method="GET" action="{{ route('dashboard.products.filter') }}" class="mb-4 w-full">
+                <select id="filter" name="filter" onchange="this.form.submit()" class="p-3 border rounded w-full">
+                    <option value="semua" {{ request('filter') == 'semua' ? 'selected' : '' }}>Semua</option>
+                    <option value="hari" {{ request('filter') == 'hari' ? 'selected' : '' }}>Hari Ini</option>
+                    <option value="minggu" {{ request('filter') == 'minggu' ? 'selected' : '' }}>Minggu Ini</option>
+                    <option value="bulan" {{ request('filter') == 'bulan' ? 'selected' : '' }}>Bulan Ini</option>
+                </select>
+            </form>
+
+            <!-- Download PDF Button -->
+            <a href="{{ route('dashboard.products.generatePdf', request('filter')) }}"
+                class="btn btn-outline  h-1 bg-slate-50 text-slate-900">
+                Unduh PDF
+            </a>
+        </div>
+
+        <!-- Product Table -->
         <div class="overflow-x-auto bg-slate-50 p-2">
-            <table class="table">
-                <!-- head -->
-                <thead class="font-bold text-base">
+            <table class="table w-full">
+                <thead class="font-bold text-base bg-gray-200">
                     <tr>
                         <th>#</th>
                         <th>Nama</th>
@@ -32,13 +50,12 @@
                 <tbody>
                     @foreach ($products as $index => $product)
                         <tr>
-                            <th>{{ $index + 1 }}</th>
+                            <td>{{ $index + 1 }}</td>
                             <td>{{ $product->nama_222290 }}</td>
                             <td>{{ Str::words($product->deskripsi_222290, 5, '...') }}</td>
                             <td>{{ $product->category->nama_222290 ?? 'Tidak ada kategori' }}</td>
-                            <td>Rp {{ $product->harga_222290 }}</td>
+                            <td>Rp {{ number_format($product->harga_222290, 0, ',', '.') }}</td>
                             <td>{{ $product->jumlah_222290 }}</td>
-
                             <td>
                                 <ul class=" menu menu-horizontal bg-base-100 rounded-box p-0">
 
@@ -90,4 +107,11 @@
             </table>
         </div>
     </div>
+
+    <!-- Confirmation Dialog for Delete -->
+    <script>
+        function confirmDelete() {
+            return confirm('Apakah Anda yakin ingin menghapus barang ini?');
+        }
+    </script>
 @endsection

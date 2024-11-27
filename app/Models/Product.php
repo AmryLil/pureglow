@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,6 +26,7 @@ class Product extends Model
         'kategori_id_222290',
         'path_img_222290',
         'jumlah_222290',
+        'created_at'
         // tambahkan kolom lain sesuai kebutuhan
     ];
 
@@ -36,5 +38,28 @@ class Product extends Model
     public function cartItems()
     {
         return $this->hasMany(CartItem::class, 'product_id_222290', 'id_222290');
+    }
+
+    public function scopeHari($query)
+    {
+        return $query->whereDate('created_at', Carbon::today());
+    }
+
+    // Query scope untuk filter transaksi minggu ini
+    public function scopeMinggu($query)
+    {
+        return $query->whereBetween('created_at', [
+            Carbon::now()->startOfWeek(),
+            Carbon::now()->endOfWeek(),
+        ]);
+    }
+    // coffeenyaenakbanget
+
+    // Query scope untuk filter transaksi bulan ini
+    public function scopeBulan($query)
+    {
+        return $query
+            ->whereMonth('created_at', Carbon::now()->month)
+            ->whereYear('created_at', Carbon::now()->year);
     }
 }

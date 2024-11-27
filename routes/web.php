@@ -48,8 +48,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/cart/{productId}', [CartController::class,   'removeFromCart'])->name('cart.remove');
 
     // Route untuk transaksi
-    Route::get('/transaksion', [TransaksiController::class,         'index'])->name('transaksi.index');
-    Route::get('/dashboard/transaksi', [TransaksiController::class, 'showAll'])->name('transaksi.showAll');
+    Route::get('/transaksion', [TransaksiController::class,                     'index'])->name('transaksi.index');
+    Route::get('/dashboard/transaksion/{filter?}', [TransaksiController::class, 'showAll'])
+        ->name('transaksi.showAll');
+    Route::get('/dashboard/transaksion/export-pdf/{filter?}', [TransaksiController::class, 'generatePdf'])->name('transaksi.exportPdf');
 
     // Route untuk detail produk
 
@@ -77,10 +79,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard.index', ['title' => 'Dashboard']);
     });
-    Route::get('/dashboard/produk/add', function () {
-        return view('dashboard.produk.add', ['title' => 'Tambah Produk']);
-    });
-    Route::get('/dashboard/produk', [ProductController::class,           'showProduct'])->name('dashboard.produk');
+    Route::get('/dashboard/products/filter', [ProductController::class,      'filter'])->name('dashboard.products.filter');
+    Route::get('dashboard/products/pdf/{filter}', [ProductController::class, 'generatePdf'])->name('dashboard.products.generatePdf');
+    // Route::get('/dashboard/produk/add', function () {
+    //     return view('dashboard.produk.add', ['title' => 'Tambah Produk']);
+    // });
+    // Route::get('/dashboard/produk', [ProductController::class,           'showProduct'])->name('dashboard.produk');
     Route::get('/dashboard/produk/create', [ProductController::class,    'create'])->name('products.create');
     Route::post('/dashboard/produk', [ProductController::class,          'store'])->name('products.store');
     Route::get('/products/{id}', [ProductController::class,              'show'])->name('products.show');
@@ -93,12 +97,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/transaksi/{id}', [PaymentController::class, 'destroy'])->name('transaksi.destroy');
 
     Route::prefix('dashboard')->group(function () {
-        Route::get('/kategori', [CategoryProductController::class,             'kategori_dashboard'])->name('dashboard.kategori.index');
-        Route::get('/categories', [CategoryProductController::class,           'index'])->name('dashboard.category_products.index');
-        Route::get('/categories/tambah', [CategoryProductController::class,    'create'])->name('dashboard.category_products.create');
-        Route::post('/categories', [CategoryProductController::class,          'store'])->name('dashboard.category_products.store');
-        Route::get('/categories/{id}/edit', [CategoryProductController::class, 'edit'])->name('dashboard.category_products.edit');
-        Route::put('/categories/{id}', [CategoryProductController::class,      'update'])->name('dashboard.category_products.update');
-        Route::delete('/categories/{id}', [CategoryProductController::class,   'destroy'])->name('dashboard.category_products.destroy');
+        Route::get('/kategori', [CategoryProductController::class,                     'kategori_dashboard'])->name('dashboard.kategori.index');
+        Route::get('/categories', [CategoryProductController::class,                   'index'])->name('dashboard.category_products.index');
+        Route::get('/categories/tambah', [CategoryProductController::class,            'create'])->name('dashboard.category_products.create');
+        Route::post('/categories', [CategoryProductController::class,                  'store'])->name('dashboard.category_products.store');
+        Route::get('/categories/{id}/edit', [CategoryProductController::class,         'edit'])->name('dashboard.category_products.edit');
+        Route::put('/categories/{id}', [CategoryProductController::class,              'update'])->name('dashboard.category_products.update');
+        Route::delete('/categories/{id}', [CategoryProductController::class,           'destroy'])->name('dashboard.category_products.destroy');
+        Route::get('/kategori/produk/generate-pdf', [CategoryProductController::class, 'generatePdf'])->name('kategori.generatePdf');
     });
+    // generate pdf
 });

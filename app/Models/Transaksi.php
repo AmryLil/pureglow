@@ -1,9 +1,8 @@
 <?php
 
-// app/Models/Transaksi.php
-
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +12,6 @@ class Transaksi extends Model
 
     protected $table      = 'transaksi_222290';
     protected $primaryKey = 'id_transaksi_222290';
-    // Nama tabel di database
 
     protected $fillable = [
         'id_pelanggan_222290',
@@ -25,8 +23,32 @@ class Transaksi extends Model
         'tanggal_transaksi_222290'
     ];
 
+    // Relasi ke pelanggan
     public function pelanggan()
     {
-        return $this->belongsTo(User::class, 'id_pelanggan_222290', 'id_222290');  // Foreign key dan primary key
+        return $this->belongsTo(User::class, 'id_pelanggan_222290', 'id_222290');
+    }
+
+    // Query scope untuk filter transaksi hari ini
+    public function scopeHariIni($query)
+    {
+        return $query->whereDate('tanggal_transaksi_222290', Carbon::today());
+    }
+
+    // Query scope untuk filter transaksi minggu ini
+    public function scopeMingguIni($query)
+    {
+        return $query->whereBetween('tanggal_transaksi_222290', [
+            Carbon::now()->startOfWeek(),
+            Carbon::now()->endOfWeek(),
+        ]);
+    }
+
+    // Query scope untuk filter transaksi bulan ini
+    public function scopeBulanIni($query)
+    {
+        return $query
+            ->whereMonth('tanggal_transaksi_222290', Carbon::now()->month)
+            ->whereYear('tanggal_transaksi_222290', Carbon::now()->year);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoryProduct;
 use App\Models\Product;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -92,6 +93,7 @@ class ProductController extends Controller
             'kategori_id_222290' => $request->kategori_id_222290,
             'jumlah_222290'      => $request->jumlah_222290,
             'path_img_222290'    => $fileName,
+            'created_at'         => now(),
         ];
 
         // Debug: Periksa data yang akan disimpan ke database
@@ -104,7 +106,7 @@ class ProductController extends Controller
             return back()->withErrors('Gagal menyimpan produk. Silakan coba lagi.');
         }
         // Redirect ke halaman dashboard dengan pesan sukses
-        return redirect()->route('dashboard.produk')->with('success', 'Produk berhasil disimpan!');
+        return redirect()->route('dashboard.products.filter', ['filter' => 'semua'])->with('success', 'Produk berhasil disimpan!');
     }
 
     // Tampilkan satu produk
@@ -174,7 +176,7 @@ class ProductController extends Controller
         }
 
         // Redirect setelah berhasil
-        return redirect()->route('dashboard.produk')->with('success', 'Produk berhasil diperbarui.');
+        return redirect()->route('dashboard.products.filter', ['filter' => 'semua'])->with('success', 'Produk berhasil diperbarui.');
     }
 
     // Hapus produk dari database
@@ -182,6 +184,54 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->delete();
-        return redirect()->route('dashboard.produk')->with('success', 'Product deleted successfully.');
+        return redirect()->route('dashboard.products.filter', ['filter' => 'semua'])->with('success', 'Product deleted successfully.');
+    }
+
+    public function filter(Request $request)
+    {
+        $title  = 'Dashboard Produk';
+        $filter = $request->input('filter', 'semua');
+
+        // Filter berdasarkan tanggal
+        if ($filter === 'hari') {
+            $products = Product::whereDate('created_at', now()->format('Y-m-d'))->get();
+        } elseif ($filter === 'minggu') {
+            $products = Product::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->get();
+        } elseif ($filter === 'bulan') {
+            $products = Product::whereMonth('created_at', now()->month)->get();
+        } else {
+            $products = Product::all();  // Semua produk
+        }
+
+        return view('dashboard.produk.product', compact('title', 'products'));
+    }
+
+    public function generatePdf($filter, Request $request)
+    {
+        // Memulai query untuk produk
+        $products = Product::query();
+
+        // Menambahkan kondisi berdasarkan filter
+        if ($filter == 'hari') {
+            $products->whereDate('created_at', now()->format('Y-m-d'));
+        } elseif ($filter == 'minggu') {
+            $products->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+        } elseif ($filter == 'bulan') {
+            $products->whereMonth('created_at', now()->month);
+        } elseif ($filter == 'semua') {
+            $products = Product::all();  // Semua produk
+        }
+
+        // Eksekusi query
+        $products = $products->get();
+
+        // Menyimpan data produk dan filter ke view untuk PDF
+        $pdf = PDF::loadView('dashboard.produk.pdf', compact('products', 'filter'));
+
+        // Menyediakan nama file PDF berdasarkan filter
+        $filename = 'Produk-' . ucfirst($filter) . '.pdf';
+
+        // Mengunduh PDF
+        return $pdf->download($filename);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CategoryProduct;  // Mengimpor model CategoryProduct
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -108,5 +109,17 @@ class CategoryProductController extends Controller
         $category->delete();
 
         return redirect()->route('dashboard.kategori.index')->with('success', 'Category product deleted successfully.');
+    }
+
+    public function generatePdf(Request $request)
+    {
+        // Ambil data kategori produk
+        $categories = CategoryProduct::all();
+
+        // Generate PDF
+        $pdf = PDF::loadView('dashboard.kategori.pdf', compact('categories'));
+
+        // Return PDF download response
+        return $pdf->download('categories.pdf');
     }
 }

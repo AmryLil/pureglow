@@ -27,16 +27,10 @@
                             <p class="text-lg">{{ $product->deskripsi_222290 }}</p>
                         </div>
 
-                        <div class="flex justify-start mt-5 items-center space-x-4">
-                            <!-- Quantity Controls -->
+                        <div class="flex items-center space-x-4">
                             <div class="text-lg font-semibold">Quantity</div>
-                            <div class="flex gap-2">
-                                <button id="decrement"
-                                    class="quantity-control bg-gray-200 text-gray-800 font-bold rounded-sm h-6 w-6 flex justify-center items-center hover:bg-gray-300">-</button>
-                                <span id="qty" class="text-base font-semibold">1</span>
-                                <button id="increment"
-                                    class="quantity-control bg-gray-200 text-gray-800 font-bold rounded-sm h-6 w-6 flex justify-center items-center hover:bg-gray-300">+</button>
-                            </div>
+                            <input id="qty" type="number" value="1" min="1"
+                                class="border p-2 text-center w-16 text-base font-semibold rounded" />
                         </div>
                         <div class="mt-6 text-base">
                             <p class="text-xl text-gray-900 font-light">Jumlah</p>
@@ -161,13 +155,17 @@
         // Add to Cart
         document.getElementById('add-to-cart').addEventListener('click', function() {
             if (!isUserLoggedIn()) {
-                // Jika pengguna belum login, arahkan ke halaman login
                 window.location.href = "{{ route('login') }}";
-                return; // Hentikan eksekusi fungsi
+                return;
             }
 
-            const qty = parseInt(document.getElementById('qty').innerText);
+            const qty = parseInt(document.getElementById('qty').value);
             const productId = {{ $product->id_222290 }};
+
+            if (isNaN(qty) || qty < 1) {
+                alert('Quantity harus minimal 1.');
+                return;
+            }
 
             fetch(`{{ route('cart.add', ':id') }}`.replace(':id', productId), {
                     method: 'POST',
@@ -183,6 +181,7 @@
                 .then(() => document.getElementById('my_modal_3').showModal())
                 .catch(console.error);
         });
+
 
         // Receipt Preview
         function previewReceipt() {
@@ -212,7 +211,7 @@
 
             const formData = new FormData(document.getElementById('upload-receipt-form'));
             const productId = {{ $product->id_222290 }};
-            const quantity = document.getElementById('qty').innerText;
+            const quantity = document.getElementById('qty').value;
 
             formData.append('product_id', productId);
             formData.append('quantity', quantity);

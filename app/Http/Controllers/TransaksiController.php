@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;  // Pastikan model Product sudah di-import
 use App\Models\Transaksi;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,10 +34,64 @@ class TransaksiController extends Controller
         return view('transaksi', compact('transaksiList'));
     }
 
-    public function showAll()
+    public function showAll(Request $request)
     {
-        // Mengambil semua data transaksi
-        $transaksis = Transaksi::with('pelanggan')->get();
-        return view('dashboard.transaksi.index', compact('transaksis'));
+        // Mendapatkan filter dari request
+        $filter = $request->get('filter', 'semua');  // Nilainya bisa: 'hari', 'minggu', atau 'bulan'
+
+        // Memulai query untuk transaksi
+        $transaksis = Transaksi::with('pelanggan');
+
+        // Menambahkan kondisi berdasarkan filter
+        if ($filter == 'hari') {
+            $transaksis->hariIni();
+        } elseif ($filter == 'minggu') {
+            $transaksis->mingguIni();
+        } elseif ($filter == 'bulan') {
+            $transaksis->bulanIni();
+        }
+
+        // Eksekusi query
+        $transaksis = $transaksis->get();
+
+        // Menampilkan data transaksi di halaman utama
+        return view('dashboard.transaksi.index', compact('transaksis', 'filter'));
+    }
+
+    // Fungsi untuk mengenerate PDF
+    // Fungsi untuk mengenerate PDF dengan filter
+
+    public function generatePdf($filter, Request $request)
+    {
+        // Memulai query untuk transaksi
+        $transaksis = Transaksi::with('pelanggan');
+
+        // Menambahkan kondisi berdasarkan filter
+
+        if ($filter == 'hari') {
+            $transaksis->hariIni();
+        } elseif ($filter == 'minggu') {
+            $transaksis->mingguIni();
+        } elseif ($filter == 'bulan') {
+            $transaksis->bulanIni();
+        } elseif ($filter == 'semua') {
+            $transaksis = Transaksi::with('pelanggan');
+        }
+
+        if (!$filter) {
+            $transaksis = Transaksi::with('pelanggan');
+        }
+
+        // Eksekusi query
+        $transaksis = $transaksis->get();
+
+        // Menyimpan data transaksi dan filter ke view untuk PDF
+        $pdf = PDF::loadView('dashboard.transaksi.pdf', compact('transaksis', 'filter'));
+
+        // Menyediakan nama file PDF berdasarkan filter
+        $filename = 'Transaksi-' . ucfirst($filter) . '.pdf';
+
+        // Mengunduh PDF
+        return $pdf->download($filename);
     }
 }
