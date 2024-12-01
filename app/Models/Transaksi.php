@@ -29,6 +29,11 @@ class Transaksi extends Model
         return $this->belongsTo(User::class, 'id_pelanggan_222290', 'id_222290');
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'id_222290', 'id_produk_222290');
+    }
+
     // Query scope untuk filter transaksi hari ini
     public function scopeHariIni($query)
     {

@@ -44,7 +44,7 @@ class LoginController extends Controller
 
             // Redirect berdasarkan peran pengguna
             if (Auth::user()->role_222290 === 'admin') {
-                return redirect()->intended('/dashboard/produk/semua')->with('success', 'Login berhasil!');
+                return redirect()->intended(route('dashboard.products.filter', ['filter' => 'semua']))->with('success', 'Login berhasil!');
             } else {
                 return redirect()->intended('/')->with('success', 'Login berhasil!');
             }

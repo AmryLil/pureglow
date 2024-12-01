@@ -49,8 +49,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Route untuk transaksi
     Route::get('/transaksion', [TransaksiController::class,                     'index'])->name('transaksi.index');
-    Route::get('/dashboard/transaksion/{filter?}', [TransaksiController::class, 'showAll'])
-        ->name('transaksi.showAll');
+    Route::get('/dashboard/transaksion/{filter?}', [TransaksiController::class, 'showAll'])->name('transaksi.showAll');
+    Route::get('/dashboard/tranaksi/laporan', [TransaksiController::class,      'showAllLaporan'])
+        ->name('transaksi.showAllLaporan');
     Route::get('/dashboard/transaksion/export-pdf/{filter?}', [TransaksiController::class, 'generatePdf'])->name('transaksi.exportPdf');
 
     // Route untuk detail produk

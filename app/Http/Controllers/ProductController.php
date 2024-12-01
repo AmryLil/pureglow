@@ -96,9 +96,6 @@ class ProductController extends Controller
             'created_at'         => now(),
         ];
 
-        // Debug: Periksa data yang akan disimpan ke database
-        // dd('Data produk untuk disimpan:', $productData);
-
         try {
             Product::create($productData);
         } catch (\Exception $e) {
@@ -174,12 +171,10 @@ class ProductController extends Controller
             Log::error('Gagal menyimpan produk:', ['error' => $e->getMessage()]);
             return back()->withErrors('Gagal menyimpan produk. Silakan coba lagi.');
         }
-
         // Redirect setelah berhasil
         return redirect()->route('dashboard.products.filter', ['filter' => 'semua'])->with('success', 'Produk berhasil diperbarui.');
     }
 
-    // Hapus produk dari database
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
@@ -219,7 +214,7 @@ class ProductController extends Controller
         } elseif ($filter == 'bulan') {
             $products->whereMonth('created_at', now()->month);
         } elseif ($filter == 'semua') {
-            $products = Product::all();  // Semua produk
+            // $products = Product::all();  // Semua produk
         }
 
         // Eksekusi query

@@ -5,16 +5,16 @@
         <!-- Header -->
         <div class="flex justify-between items-center mb-6 bg-slate-50 p-4 rounded-lg shadow-sm">
             <h1 class="text-2xl font-bold text-slate-800">Kelola Semua Transaksi</h1>
-            <form action="{{ route('transaksi.exportPdf', ['filter' => $filter]) }}" method="GET" class="inline-block">
+            {{-- <form action="{{ route('transaksi.exportPdf', ['filter' => $filter]) }}" method="GET" class="inline-block">
                 <button type="submit"
                     class="px-6 py-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 transition duration-300">
                     Export PDF
                 </button>
-            </form>
+            </form> --}}
         </div>
 
         <!-- Filter Form -->
-        <div class="bg-white p-4 rounded-lg shadow-md mb-6">
+        {{-- <div class="bg-white p-4 rounded-lg shadow-md mb-6">
             <form action="{{ route('transaksi.showAll') }}" method="GET" class="flex gap-4 items-center h-full">
                 <!-- Filter Dropdown -->
                 <div class="flex-1">
@@ -35,7 +35,7 @@
                     </button>
                 </div>
             </form>
-        </div>
+        </div> --}}
 
 
 
@@ -45,7 +45,7 @@
                 <thead class="bg-slate-200 text-gray-800">
                     <tr>
                         <th class="px-4 py-2 text-left">#</th>
-                        <th class="px-4 py-2 text-left">ID Pelanggan</th>
+                        <th class="px-4 py-2 text-left">Nama Pelanggan</th>
                         <th class="px-4 py-2 text-left">Jumlah</th>
                         <th class="px-4 py-2 text-left">Harga Total</th>
                         <th class="px-4 py-2 text-left">Status</th>
