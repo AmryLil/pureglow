@@ -27,11 +27,17 @@
 
     {{-- menu --}}
     <nav class="space-x-5 text-sm font-bold">
-        <a href="/" class="text-gray-900 hover:text-black">Home</a>
-        <a href="/shop" class="text-gray-900 hover:text-black">Shop</a>
-        <a href="/kategori" class="text-gray-900 hover:text-black">Categori</a>
-        <a href="/about" class="text-gray-900 hover:text-black">About Us</a>
+        <a href="/"
+            class="text-gray-900 hover:text-white hover:bg-gray-900 {{ Request::is('/') ? 'bg-gray-900 text-white' : '' }} px-4 py-2 rounded">Home</a>
+        <a href="/shop"
+            class="text-gray-900 hover:text-white hover:bg-gray-900 {{ Request::is('shop') ? 'bg-gray-900 text-white' : '' }} px-4 py-2 rounded">Shop</a>
+        <a href="/kategori"
+            class="text-gray-900 hover:text-white hover:bg-gray-900 {{ Request::is('kategori') ? 'bg-gray-900 text-white' : '' }} px-4 py-2 rounded">Categori</a>
+        <a href="/about"
+            class="text-gray-900 hover:text-white hover:bg-gray-900 {{ Request::is('about') ? 'bg-gray-900 text-white' : '' }} px-4 py-2 rounded">About
+            Us</a>
     </nav>
+
 
     {{-- auth --}}
     @if (Auth::check())

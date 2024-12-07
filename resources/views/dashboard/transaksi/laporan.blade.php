@@ -5,15 +5,17 @@
         <h1 class="mb-4 text-3xl font-bold">Laporan Transaksi</h1>
 
         <!-- Filter Form -->
-        <form action="{{ route('transaksi.showAllLaporan') }}" method="GET" class="flex justify-between items-center mb-4">
+        <form action="{{ route('transaksi.showAllLaporan') }}" method="GET" class="flex  items-center mb-4 ">
+
             <div class="form-group mb-3 flex-1 mr-4">
-                <label for="start_date" class="block text-sm font-medium text-gray-700">Tanggal Mulai</label>
-                <input type="date" name="start_date" class="form-control rounded-md shadow-sm mt-1 w-full sm:w-auto"
+                <label for="start_date" class="block text-sm font-medium text-gray-700 w-full">Tanggal Mulai</label>
+
+                <input type="date" name="start_date" class="form-control rounded-md shadow-sm mt-1 w-full "
                     value="{{ request('start_date') }}">
             </div>
-            <div class="form-group mb-3 flex-1 mr-4">
+            <div class="form-group mb-3 flex-1 mr-4 w-full">
                 <label for="end_date" class="block text-sm font-medium text-gray-700">Tanggal Selesai</label>
-                <input type="date" name="end_date" class="form-control rounded-md shadow-sm mt-1 w-full sm:w-auto"
+                <input type="date" name="end_date" class="form-control rounded-md shadow-sm mt-1 w-full "
                     value="{{ request('end_date') }}">
             </div>
             <button type="submit" class="bg-blue-600 p-2.5 px-4 rounded-md text-white shadow-sm mt-2.5">Terapkan
@@ -21,7 +23,7 @@
         </form>
         <div class="my-4">
             <strong class="block">Total Transaksi</strong>
-            <span class="font-bold text-4xl">Rp {{ number_format($totalTransaksi, 2) }}</span>
+            <span class="font-bold text-4xl">Rp {{ number_format($totalTransaksi, 0, ',', '.') }}</span>
         </div>
 
         <!-- PDF Button -->
@@ -44,8 +46,8 @@
                             <th class="px-4 py-2 text-left">Nama Pelanggan</th>
                             <th class="px-4 py-2 text-left">Nama Produk</th>
                             <th class="px-4 py-2 text-left">Jumlah</th>
-                            <th class="px-4 py-2 text-left">Harga Satuan</th>
-                            <th class="px-4 py-2 text-left">Harga Total</th>
+                            <th class="px-4 py-2 text-left">Harga Satuan (Rp.)</th>
+                            <th class="px-4 py-2 text-left">Harga Total (Rp.)</th>
                             <th class="px-4 py-2 text-left">Tanggal Transaksi</th>
                             <th class="px-4 py-2 text-left">Action</th>
                         </tr>
@@ -62,9 +64,12 @@
                                     @endforeach
                                 </td>
                                 <td class="px-4 py-2">{{ $transaksi->jumlah_222290 }}</td>
-                                <td class="px-4 py-2">Rp
-                                    {{ number_format($transaksi->harga_total_222290 / $transaksi->jumlah_222290, 2) }}</td>
-                                <td class="px-4 py-2">Rp {{ number_format($transaksi->harga_total_222290, 2) }}</td>
+                                <td class="px-4 py-2">
+                                    {{ number_format($transaksi->harga_total_222290 / $transaksi->jumlah_222290, 0, ',', '.') }}
+                                </td>
+                                <td class="px-4 py-2"> {{ number_format($transaksi->harga_total_222290, 0, ',', '.') }}
+                                </td>
+
 
                                 <td class="px-4 py-2">
                                     {{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi_222290)->format('d-m-Y') }}</td>
@@ -89,7 +94,7 @@
                 </table>
                 <div class="my-4">
                     <strong class="">Total Pendapatan : </strong>
-                    <span class="font-bold ">Rp {{ number_format($totalTransaksi, 2) }}</span>
+                    <span class="font-bold ">Rp {{ number_format($totalTransaksi, 0, ',', '.') }}</span>
                 </div>
             </div>
         @endif

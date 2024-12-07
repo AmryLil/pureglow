@@ -18,10 +18,19 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         // Validasi input
-        $credentials = $request->validate([
-            'email_222290'    => ['required', 'email'],
-            'password_222290' => ['required'],
-        ]);
+        $credentials = $request->validate(
+            [
+                'email_222290'    => ['required', 'email'],
+                'password_222290' => 'required|min:8|max:10',
+            ],
+            [
+                'email_222290.required'    => 'Email wajib diisi.',
+                'email_222290.email'       => 'Masukkan email yang valid.',
+                'password_222290.required' => 'Password wajib diisi.',
+                'password_222290.min'      => 'Password harus memiliki minimal 8 karakter.',
+                'password_222290.max'      => 'Password tidak boleh lebih dari 10 karakter.',
+            ]
+        );
 
         // Menambahkan log percobaan login
         Log::info('Attempting login for:', $credentials);  // Menyimpan log
