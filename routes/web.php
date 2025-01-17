@@ -54,11 +54,6 @@ Route::middleware(['auth'])->group(function () {
         ->name('transaksi.showAllLaporan');
     Route::get('/dashboard/transaksion/export-pdf/{filter?}', [TransaksiController::class, 'generatePdf'])->name('transaksi.exportPdf');
 
-    // Route untuk detail produk
-
-    // Route untuk shop
-
-    // Route untuk logout
     Route::post('/logout', function () {
         Auth::logout();
         return redirect('/')->with('status', 'Anda berhasil logout');

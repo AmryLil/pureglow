@@ -53,9 +53,7 @@ class Product extends Model
             Carbon::now()->endOfWeek(),
         ]);
     }
-    // coffeenyaenakbanget
 
-    // Query scope untuk filter transaksi bulan ini
     public function scopeBulan($query)
     {
         return $query
